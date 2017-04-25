@@ -1,0 +1,741 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="jdbc,mybatis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="用JDBC实现对数据上的操作12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667public static List&amp;lt;Map&amp;lt;String,Object&amp;gt;&amp;gt; queryForLi">
+<meta name="keywords" content="jdbc,mybatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从JDBC的不足思考Mybatis的构建">
+<meta property="og:url" content="http://yoursite.com/2017/03/03/thinking-about-mybatis-from-jdbc/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="用JDBC实现对数据上的操作12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667public static List&amp;lt;Map&amp;lt;String,Object&amp;gt;&amp;gt; queryForLi">
+<meta property="og:updated_time" content="2017-04-23T12:22:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从JDBC的不足思考Mybatis的构建">
+<meta name="twitter:description" content="用JDBC实现对数据上的操作12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667public static List&amp;lt;Map&amp;lt;String,Object&amp;gt;&amp;gt; queryForLi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/03/thinking-about-mybatis-from-jdbc/"/>
+
+
+
+
+
+  <title>从JDBC的不足思考Mybatis的构建 | Hexo</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/03/thinking-about-mybatis-from-jdbc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                从JDBC的不足思考Mybatis的构建
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-03T08:13:37+08:00">
+                2017-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="用JDBC实现对数据上的操作"><a href="#用JDBC实现对数据上的操作" class="headerlink" title="用JDBC实现对数据上的操作"></a>用JDBC实现对数据上的操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Map&lt;String,Object&gt;&gt; queryForList()&#123;  </div><div class="line">        Connection connection = <span class="keyword">null</span>;  </div><div class="line">        ResultSet rs = <span class="keyword">null</span>;  </div><div class="line">        PreparedStatement stmt = <span class="keyword">null</span>;  </div><div class="line">        List&lt;Map&lt;String,Object&gt;&gt; resultList = <span class="keyword">new</span> ArrayList&lt;Map&lt;String,Object&gt;&gt;();  </div><div class="line">          </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            <span class="comment">// 1.加载JDBC驱动  </span></div><div class="line">            Class.forName(<span class="string">"oracle.jdbc.driver.OracleDriver"</span>).newInstance();  </div><div class="line">            String url = <span class="string">"jdbc:oracle:thin:@localhost:1521:ORACLEDB"</span>;  </div><div class="line">              </div><div class="line">            String user = <span class="string">"trainer"</span>;   </div><div class="line">            String password = <span class="string">"trainer"</span>;   </div><div class="line">              </div><div class="line">            <span class="comment">// 2.获取数据库连接，这里需要填写数据库的信息，包括账号密码</span></div><div class="line">            connection = DriverManager.getConnection(url,user,password);   </div><div class="line">              </div><div class="line">            <span class="comment">// 创建查询语句</span></div><div class="line">            String sql = <span class="string">"select * from userinfo where user_id = ? "</span>;  </div><div class="line">            <span class="comment">// 3.创建Statement对象（每一个Statement为一次数据库执行请求</span></div><div class="line">            stmt = connection.prepareStatement(sql);  </div><div class="line">              </div><div class="line">            <span class="comment">// 4.设置传入参数  </span></div><div class="line">            stmt.setString(<span class="number">1</span>, <span class="string">"zhangsan"</span>);  </div><div class="line">              </div><div class="line">            <span class="comment">// 5.执行SQL语句  </span></div><div class="line">            rs = stmt.executeQuery();  </div><div class="line">              </div><div class="line">            <span class="comment">// 6.处理查询结果（将查询结果转换成List&lt;Map&gt;格式）  </span></div><div class="line">            ResultSetMetaData rsmd = rs.getMetaData();  </div><div class="line">            <span class="keyword">int</span> num = rsmd.getColumnCount();  </div><div class="line">              </div><div class="line">            <span class="keyword">while</span>(rs.next())&#123;  </div><div class="line">                Map map = <span class="keyword">new</span> HashMap();  </div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; num;i++)&#123;  </div><div class="line">                    String columnName = rsmd.getColumnName(i+<span class="number">1</span>);  </div><div class="line">                    map.put(columnName,rs.getString(columnName));  </div><div class="line">                &#125;  </div><div class="line">                resultList.add(map);  </div><div class="line">            &#125;  </div><div class="line">              </div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">finally</span> &#123; </div><div class="line">        		 <span class="comment">// 7. 释放所有资源</span></div><div class="line">            <span class="keyword">try</span> &#123;  </div><div class="line">                   <span class="comment">//关闭结果集  </span></div><div class="line">                <span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;  </div><div class="line">                    rs.close();  </div><div class="line">                    rs = <span class="keyword">null</span>;  </div><div class="line">                &#125;  </div><div class="line">                   <span class="comment">//关闭执行  </span></div><div class="line">                <span class="keyword">if</span> (stmt != <span class="keyword">null</span>) &#123;  </div><div class="line">                    stmt.close();  </div><div class="line">                    stmt = <span class="keyword">null</span>;  </div><div class="line">                &#125;  </div><div class="line">                <span class="keyword">if</span> (connection != <span class="keyword">null</span>) &#123;  </div><div class="line">                    connection.close();  </div><div class="line">                    connection = <span class="keyword">null</span>;  </div><div class="line">                &#125;  </div><div class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">          </div><div class="line">        <span class="keyword">return</span> resultList;  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="从JDBC中思考Mybatis的构建"><a href="#从JDBC中思考Mybatis的构建" class="headerlink" title="从JDBC中思考Mybatis的构建"></a>从JDBC中思考Mybatis的构建</h2><p>MyBatis是将sql语句中的输入参数和输出参数映射为java对象，放弃了对数据表的完整性控制，但是获得了更灵活和响应性能更快的优势。<br>代码注释中标出的7步，在开发中显得略微复杂繁琐，因此在此思考Mybatis是如何改进JDBC的缺点的。</p>
+<h3 id="连接获取和释放"><a href="#连接获取和释放" class="headerlink" title="连接获取和释放"></a>连接获取和释放</h3><p>如果每次请求数据库都获取连接然后释放，则过于浪费性能；如果都放在一个try里面，则增加代码复杂度以至于难以阅读。可以是用连接池以重复使用连接，但是连接池的多样化问题略为严重。</p>
+<p><strong>解决：</strong>通过一个中间层DataSource进行解耦，统一从DataSource获取连接，DataSource可通过配置选择不同的连接池（DBCP、JNDI）。</p>
+<h3 id="SQL统一存取"><a href="#SQL统一存取" class="headerlink" title="SQL统一存取"></a>SQL统一存取</h3><p>以上例子中的查询语句依然使用SQL字符串，并且还略为发散，根据大佬的话，有三处不足：</p>
+<ul>
+<li>可读性很差，不利于维护以及做性能调优</li>
+<li>改动Java代码需要重新编译、打包部署</li>
+<li>不利于取出SQL在数据库客户端执行</li>
+</ul>
+<p><strong>解决：</strong>将SQL语句统一集中放到配置文件或者数据库里面（以key-value的格式存放），但涉及读取SQL语句的加载问题。</p>
+<h3 id="传入参数映射和动态SQL"><a href="#传入参数映射和动态SQL" class="headerlink" title="传入参数映射和动态SQL"></a>传入参数映射和动态SQL</h3><p>通过在SQL语句中设置占位符来传参，就要求参数与占位符一一匹配，当传参不确定时，还是得自己拼接于是还是只能在代码中写SQL，因此需要方法根据不同的传参动态生成。</p>
+<p><strong>解决：</strong>类似if-else清晰的结构，使用key-value的Map，在解析的时候根据变量名的具体值来判断，同时使用一种有别于SQL的语法来嵌入变量（如<code>#变量名#</code>），如此便可生成符合上下文的SQL语句。</p>
+<p>同时，要区分开占位符变量和非占位变量，可以使用<code>#变量名#</code>表示占位符变量，使用<code>$变量名$</code>表示非占位符变量。</p>
+<h3 id="结果映射和结果缓存"><a href="#结果映射和结果缓存" class="headerlink" title="结果映射和结果缓存"></a>结果映射和结果缓存</h3><p>执行SQL语句、获取执行结果、对执行结果进行转换处理、释放相关资源的步骤必须是有序的，否则会出错。（如，获取结果不能在释放之后）因此可以封装起来，但主要的是处理结果，如果能把常用的结果处理方法都到位，就可将整个过程封装起来。</p>
+<p><strong>解决：</strong>由于返回和处理结果的多样性，必须要设置两个参数：返回对象的类型，返回数据与处理结构的映射。同时，采用KV缓存提供SQL的性能，而为了保证key的唯一，key采用SQL语句和参数。</p>
+<h3 id="重复SQL语句问题"><a href="#重复SQL语句问题" class="headerlink" title="重复SQL语句问题"></a>重复SQL语句问题</h3><p>个别语句只是条件不同，主体大致，而表结构的改动促使代码多处修改导致不利于维护。</p>
+<p><strong>解决：</strong>将重复的代码抽离出来成为独立的一个类，然后在各个需要使用的地方进行引用，即模块化。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Hibernate属于全自动，Mybatis属于半自动，JDBC属于手动<br>从开发效率上讲Hibernate较高，Mybatis居中，JDBC较低<br>从执行效率上讲Hibernate较低，Mybatis居中，JDBC较高</p>
+<h2 id="其他问题：ibatis与Mybatis的区别"><a href="#其他问题：ibatis与Mybatis的区别" class="headerlink" title="其他问题：ibatis与Mybatis的区别"></a>其他问题：ibatis与Mybatis的区别</h2><p>ibatis是Mybatis的前身</p>
+<ul>
+<li>Mybatis实现了接口绑定，使用更加方便</li>
+<li>对象关系映射的改进，效率更高</li>
+<li>MyBatis采用功能强大的基于OGNL的表达式来消除其他元素</li>
+</ul>
+<p><br><br><br>若有错误之处请指出，更多地关注<a href="https://www.jianyujianyu.com" target="_blank" rel="external">煎鱼</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jdbc/" rel="tag"># jdbc</a>
+          
+            <a href="/tags/mybatis/" rel="tag"># mybatis</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/06/chinese-unicode-in-python2.x/" rel="next" title="Python 2.x 的中文编码问题">
+                <i class="fa fa-chevron-left"></i> Python 2.x 的中文编码问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/14/http-server-implement-using-niosocket/" rel="prev" title="使用NioSocket手动实现HTTP服务器">
+                使用NioSocket手动实现HTTP服务器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="John Doe" />
+          <p class="site-author-name" itemprop="name">John Doe</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用JDBC实现对数据上的操作"><span class="nav-number">1.</span> <span class="nav-text">用JDBC实现对数据上的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从JDBC中思考Mybatis的构建"><span class="nav-number">2.</span> <span class="nav-text">从JDBC中思考Mybatis的构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连接获取和释放"><span class="nav-number">2.1.</span> <span class="nav-text">连接获取和释放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL统一存取"><span class="nav-number">2.2.</span> <span class="nav-text">SQL统一存取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传入参数映射和动态SQL"><span class="nav-number">2.3.</span> <span class="nav-text">传入参数映射和动态SQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果映射和结果缓存"><span class="nav-number">2.4.</span> <span class="nav-text">结果映射和结果缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重复SQL语句问题"><span class="nav-number">2.5.</span> <span class="nav-text">重复SQL语句问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题：ibatis与Mybatis的区别"><span class="nav-number">4.</span> <span class="nav-text">其他问题：ibatis与Mybatis的区别</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

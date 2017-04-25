@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="go,web," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="简介和要求教程将涵盖以下知识：  创建一个带有load和save方法的数据结构体 使用net/http包来创建web应用 使用html/template包来处理HTML模板 使用regexp包来检测用户的输入 使用闭包  假设你已经有以下知识：  编程经验 明白基础的web知识（HTTP，HTML） 具有些UNIX、DOS的命令行知识  开始首先，你需要有一个装了FreeBSD、Linux、Mac">
+<meta name="keywords" content="go,web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Go写一个简单Web应用">
+<meta property="og:url" content="http://yoursite.com/2016/08/06/writing-web-using-go/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简介和要求教程将涵盖以下知识：  创建一个带有load和save方法的数据结构体 使用net/http包来创建web应用 使用html/template包来处理HTML模板 使用regexp包来检测用户的输入 使用闭包  假设你已经有以下知识：  编程经验 明白基础的web知识（HTTP，HTML） 具有些UNIX、DOS的命令行知识  开始首先，你需要有一个装了FreeBSD、Linux、Mac">
+<meta property="og:updated_time" content="2017-04-23T12:43:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Go写一个简单Web应用">
+<meta name="twitter:description" content="简介和要求教程将涵盖以下知识：  创建一个带有load和save方法的数据结构体 使用net/http包来创建web应用 使用html/template包来处理HTML模板 使用regexp包来检测用户的输入 使用闭包  假设你已经有以下知识：  编程经验 明白基础的web知识（HTTP，HTML） 具有些UNIX、DOS的命令行知识  开始首先，你需要有一个装了FreeBSD、Linux、Mac">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/08/06/writing-web-using-go/"/>
+
+
+
+
+
+  <title>用Go写一个简单Web应用 | Hexo</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/06/writing-web-using-go/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                用Go写一个简单Web应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-08-06T03:15:59+08:00">
+                2016-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Golang/" itemprop="url" rel="index">
+                    <span itemprop="name">Golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介和要求"><a href="#简介和要求" class="headerlink" title="简介和要求"></a>简介和要求</h2><p>教程将涵盖以下知识：</p>
+<ul>
+<li>创建一个带有load和save方法的数据结构体</li>
+<li>使用net/http包来创建web应用</li>
+<li>使用html/template包来处理HTML模板</li>
+<li>使用regexp包来检测用户的输入</li>
+<li>使用闭包</li>
+</ul>
+<p>假设你已经有以下知识：</p>
+<ul>
+<li>编程经验</li>
+<li>明白基础的web知识（HTTP，HTML）</li>
+<li>具有些UNIX、DOS的命令行知识</li>
+</ul>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>首先，你需要有一个装了FreeBSD、Linux、MacOS甚至是Windows系统的机器来跑Go程序。然后，你需要有一个Go环境，即你需要安装Go（废话）。</p>
+<p>为了这个教程，我们先在GOPATH里创建一个文件夹，并用cd命令进入里面：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir gowiki</div><div class="line">$ cd gowiki</div></pre></td></tr></table></figure>
+<p>而后创建一个名为wiki.go的文件，用你最中意的编辑器打开它，并在里面加上以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import (</div><div class="line">	&quot;fmt&quot;</div><div class="line">	&quot;io/ioutil&quot;</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>以上我们从Go的标准库中导入了fmt和ioutil包。而之后我们会用import声明来引入更多的包，如果我们要实现更多额外的功能的话。</p>
+<h2 id="数据结构体"><a href="#数据结构体" class="headerlink" title="数据结构体"></a>数据结构体</h2><p>现在我们开始定义一个结构体。想象一下，一个wiki应该有什么？它应该有一堆互有关系（互含链接）的网页Page，而后每个网页Page都起码有一个标题Title和主体Body，主体就是内容。因此我们先定义一个网页Page的结构，它有一个标题域和主体域：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">type Page struct &#123;</div><div class="line">    Title string</div><div class="line">    Body  []byte</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中[]byte是“比特切片”的意思，不选用string而选用[]byte，是因为我们会在io库中用到[]byte类型，接下来你会看到的。</p>
+<p>Page结构体描述了网页的数据存储在内存中的形式，然而持久化存储呢？我们可以为Page创建一个save方法来实现存储：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">func (p *Page) save() error &#123;</div><div class="line">    filename := p.Title + &quot;.txt&quot;</div><div class="line">    return ioutil.WriteFile(filename, p.Body, 0600)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个方法的声明<code>func (p *Page) save() error{}</code>表明了这个方法名为save，属于p，即Page指针类型可调用的方法，而且它不需要传入任何参数，而后返回一个error类型的值。</p>
+<p>这个方法会将网页的主体保存到一个txt文件中，而方便起见，我们选用这个网页的Title项作为这个txt文件的名字。而这个save方法返回一个error类型是因为error也是WriteFile的返回类型（WriteFile是一个用于将[]byte写入文件的标准库函数），当然这样返回error也是为了能让程序在写文件时发生错误后处理好。而大多数情况是一切安好，没有故障，这样Page.save()就会返回一个nil（nil是指针、接口或其他类型的”零值“）。</p>
+<p>如果你足够细心的话，你会发现WriteFile的第三个参数很奇怪。这个一个八进制数字0600，表明了这个txt文件只对于当前用户，是以具有可读写权限的方式打开的（p.s. 不懂为啥是600的可以看一下Unix/Linux的权限的表达方式）。</p>
+<p>有了存储save()方法，对应的也应该有读取的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">func loadPage(title string) *Page &#123;</div><div class="line">    filename := title + &quot;.txt&quot;</div><div class="line">    body, _ := ioutil.ReadFile(filename)</div><div class="line">    return &amp;Page&#123;Title: title, Body: body&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>loadPage的思想很简单：读取与title有相应名字的txt文件，将文件的内容赋值给变量body，而后返回一个带有Title和Body的Page结构体实例的指针。</p>
+<p>首先我们得知道函数是可以返回多个返回值的。而标准库函数io.ReadFile返回了[]byte和error两个类型的值。当然这个简单的loadPage，并没有对错误进行处理 —— 上述代码使用了空标识符，即下划线_，用于抛弃这个error返回值（本质上，这样就是将变量分配到空，就是抛弃）。</p>
+<p>但是问题很严重 —— 如果有error了应该怎么办？举个例子，可能这个txt文件并不存在，总不能抛弃吧。因此我们不能坐视不理，我们应该修改一下这个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">func loadPage(title string) (*Page, error) &#123;</div><div class="line">    filename := title + &quot;.txt&quot;</div><div class="line">    body, err := ioutil.ReadFile(filename)</div><div class="line">    if err != nil &#123;</div><div class="line">        return nil, err</div><div class="line">    &#125;</div><div class="line">    return &amp;Page&#123;Title: title, Body: body&#125;, nil</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在这个方法的调用者就可以检测一下第二返回值是否为空，以此来检测是否成功读取到Page了。</p>
+<p>而在这个moment，我们已经有一些简单的数据结构和读取页面的方法了。我们可以着手于写一个main来测试一下我们写的有没有错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">func main() &#123;</div><div class="line">    p1 := &amp;Page&#123;Title: &quot;TestPage&quot;, Body: []byte(&quot;This is a sample Page.&quot;)&#125;</div><div class="line">    p1.save()</div><div class="line">    p2, _ := loadPage(&quot;TestPage&quot;)</div><div class="line">    fmt.Println(string(p2.Body))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码编译和执行完后，一个名为TestPage.txt、包含着p1内容的文件将会被创建出来。而后这个文件会被p2这个结构体读取，而后这个p2结构体的Body内容将会被输出到屏幕上。</p>
+<p>好，现在我们可以编译和运行了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ go build wiki.go</div><div class="line">$ ./wiki</div><div class="line">This is a sample page.</div></pre></td></tr></table></figure>
+<p>（如果你是windows上跑的，运行的时候直接打”wiki”就行，不需要“./”了。）</p>
+<h2 id="介绍一下net-http包"><a href="#介绍一下net-http包" class="headerlink" title="介绍一下net/http包"></a>介绍一下net/http包</h2><p>以下是一个简单的web服务器程序例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">package main</div><div class="line"></div><div class="line">import (</div><div class="line">    &quot;fmt&quot;</div><div class="line">    &quot;net/http&quot;</div><div class="line">)</div><div class="line"></div><div class="line">func handler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    fmt.Fprintf(w, &quot;Hi there, I love %s!&quot;, r.URL.Path[1:])</div><div class="line">&#125;</div><div class="line"></div><div class="line">func main() &#123;</div><div class="line">    http.HandleFunc(&quot;/&quot;, handler)</div><div class="line">    http.ListenAndServe(&quot;:8080&quot;, nil)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>main函数一开始就调用了http.HandleFunc，这个函数就是告诉http包，将web服务器所有/下的请求交给handler处理。接着main函数又调用了http.ListenAndServe，目的就是指定8080端口（先不用管那个第二个参数nil），这个ListenAndServe会一直阻塞整个程序，直到程序被终止。</p>
+<p>函数handler的类型是http.HandlerFunc，它需要两个参数，http.ResponseWriter和http.Request。http.ResponseWriter变量的作用就是回应HTTP请求，向它写入一些东西即向HTTP客户端发送一些东西。而http.Request是一个代表了HTTP客户请求的数据结构。handler中的r.URL.Path是请求URL的路径部分，紧跟着的[1:]是对路径的一个切片动作，即返回r.URL.Path的第一个字符到结尾的切片，在这里，实际意味着除去/符号，只要后面的。</p>
+<p>如果你运行该程序，并访问以下地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://localhost:8080/monkeys</div></pre></td></tr></table></figure>
+<p>这个程序就会在终端中输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Hi there, I love monkeys!</div></pre></td></tr></table></figure>
+<h2 id="将wiki和net-http包合并使用"><a href="#将wiki和net-http包合并使用" class="headerlink" title="将wiki和net/http包合并使用"></a>将wiki和net/http包合并使用</h2><p>想要使用net/http包，我们必须先将它导入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import (</div><div class="line">	&quot;fmt&quot;</div><div class="line">	&quot;io/ioutil&quot;</div><div class="line">	&quot;net/http&quot;</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>而后我们创建一个handler，叫做viewHandler，它可允许用户访问wiki的页面，它会处理前缀是/view/的URL。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">func viewHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/view/&quot;):]</div><div class="line">    p, _ := loadPage(title)</div><div class="line">    fmt.Fprintf(w, &quot;&lt;h1&gt;%s&lt;/h1&gt;&lt;div&gt;%s&lt;/div&gt;&quot;, p.Title, p.Body)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>首先，函数先在请求URL的路径部分，即r.URL.Path中提取页面的title。路径被[len(“/view/“):]重新切片了一下，为的就是除掉请求URL中/view/的部分，这是因为/view/并不是page的名称。而后函数读取这个txt文件，然后将内容格式转换为的string形式的简单的HTML，继而将这个string写到w，即http.ResponseWriter。</p>
+<p>同样这里需要注意一下这个<em>，这里的</em>也是直接忽略了loadPage的error返回值，这样做仅是为了程序的简单易懂，而这样忽略通常是极其不好的习惯。我们迟点再对这里进行修改（其实，很多时候都是说迟点再改然后就忘了- -）。</p>
+<p>要使用这个handler，我们需要重写一下我们的main函数中的http初始化部分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">func main() &#123;</div><div class="line">    http.HandleFunc(&quot;/view/&quot;, viewHandler)</div><div class="line">    http.ListenAndServe(&quot;:8080&quot;, nil)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后我们手动创建一下txt文件（比如说test.txt，用编辑器在里面写句Hello world），然后编译一下我们的代码并运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ go build wiki.go</div><div class="line">$ ./wiki</div></pre></td></tr></table></figure>
+<p>接着你就可以在浏览器访问<a href="http://localhost:8080/view/test看看是不是有一个Hello" target="_blank" rel="external">http://localhost:8080/view/test看看是不是有一个Hello</a> world，或者是你自己自定义的启动txt文件内容。</p>
+<h2 id="wiki的编辑页面"><a href="#wiki的编辑页面" class="headerlink" title="wiki的编辑页面"></a>wiki的编辑页面</h2><p>不能编辑wiki页面的wiki不是一个好wiki。因此，我们需要额外创建两个handler，一个叫做editHandler，用来显示一个wiki的编辑页面，另一个handler叫saveHandler，用来通过提交的表单保存<br>数据。</p>
+<p>首先，我们先将一下这些添加到main：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">func main() &#123;</div><div class="line">    http.HandleFunc(&quot;/view/&quot;, viewHandler)</div><div class="line">    http.HandleFunc(&quot;/edit/&quot;, editHandler)</div><div class="line">    http.HandleFunc(&quot;/save/&quot;, saveHandler)</div><div class="line">    http.ListenAndServe(&quot;:8080&quot;, nil)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而后以下的函数editHandler将会载入页面（或者如果这个页面不存在的话，创建一个新的页面结构），然后在浏览器显示这个编辑的表单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">func editHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/edit/&quot;):]</div><div class="line">    p, err := loadPage(title)</div><div class="line">    if err != nil &#123;</div><div class="line">        p = &amp;Page&#123;Title: title&#125;</div><div class="line">    &#125;</div><div class="line">    fmt.Fprintf(w, &quot;&lt;h1&gt;Editing %s&lt;/h1&gt;&quot;+</div><div class="line">        &quot;&lt;form action=\&quot;/save/%s\&quot; method=\&quot;POST\&quot;&gt;&quot;+</div><div class="line">        &quot;&lt;textarea name=\&quot;body\&quot;&gt;%s&lt;/textarea&gt;&lt;br&gt;&quot;+</div><div class="line">        &quot;&lt;input type=\&quot;submit\&quot; value=\&quot;Save\&quot;&gt;&quot;+</div><div class="line">        &quot;&lt;/form&gt;&quot;,</div><div class="line">        p.Title, p.Title, p.Body)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样的代码是没有问题的，它能正常运行，但是，这样的硬编码HTML实在是太难看了，我们需要一种“优雅”的输出HTML的方式。</p>
+<h2 id="使用html-template包优雅地输出HTML"><a href="#使用html-template包优雅地输出HTML" class="headerlink" title="使用html/template包优雅地输出HTML"></a>使用html/template包优雅地输出HTML</h2><p>html/template包属于Go标准库。使用这个包，我们就可以分离HTML到一个单独的HTML文件，这样我们在修改编辑页面的布局时，就不用再Go代码里面修改了。</p>
+<p>首先，我们还是先在import列表中加入我们要导入的html/template，同时，这一次我们不再想要用fmt将内容输出到屏幕了，我们将fmt去掉：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import (</div><div class="line">	&quot;html/template&quot;</div><div class="line">	&quot;io/ioutil&quot;</div><div class="line">	&quot;net/http&quot;</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>接下来，我们创建一个包含了HTML表单的模板 —— 新建一个名为edit.html的文件并添加以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;h1&gt;Editing &#123;&#123;.Title&#125;&#125;&lt;/h1&gt;</div><div class="line"></div><div class="line">&lt;form action=&quot;/save/&#123;&#123;.Title&#125;&#125;&quot; method=&quot;POST&quot;&gt;</div><div class="line">&lt;div&gt;&lt;textarea name=&quot;body&quot; rows=&quot;20&quot; cols=&quot;80&quot;&gt;&#123;&#123;printf &quot;%s&quot; .Body&#125;&#125;&lt;/textarea&gt;&lt;/div&gt;</div><div class="line">&lt;div&gt;&lt;input type=&quot;submit&quot; value=&quot;Save&quot;&gt;&lt;/div&gt;</div><div class="line">&lt;/form&gt;</div></pre></td></tr></table></figure>
+<p>修改editHandler，将硬编码HTML替换为使用模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">func editHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/edit/&quot;):]</div><div class="line">    p, err := loadPage(title)</div><div class="line">    if err != nil &#123;</div><div class="line">        p = &amp;Page&#123;Title: title&#125;</div><div class="line">    &#125;</div><div class="line">    t, _ := template.ParseFiles(&quot;edit.html&quot;)</div><div class="line">    t.Execute(w, p)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>template.ParseFiles函数会读取edit.html内容，并返回一个模板的指针*template.Template。而t.Execute函数则是将内容写入模板而后生成HTML到http.ResponseWriter。模板中.Title和.Body中使用的点就是指传入的对象的对应属性，在这里指p.Title和p.Body。</p>
+<p>模板中的变量要使用双花括号套住。而模板中的指令<code>printf &quot;%s&quot; .Body</code>，则是一个以string形式而不是bytes串形式输出Body值的函数调用，这样就相当于fmt.Printf函数，只是一个是输出于浏览器页面上，另一个输出于终端上。</p>
+<p>html/template包可以帮我们通过模板生成安全的、正确的HTML代码。比如说，它能自动帮你转换大于号（&gt;），就是自动地帮你替换<code>&amp;gt;</code>，这样就保证用户数据不会对HTML表单造成干扰。</p>
+<p>既然我们已经在使用模板了，我们就继续用模板的这个套路来创建我们的view.html以及调用它的viewHandler。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;h1&gt;&#123;&#123;.Title&#125;&#125;&lt;/h1&gt;</div><div class="line"></div><div class="line">&lt;p&gt;[&lt;a href=&quot;/edit/&#123;&#123;.Title&#125;&#125;&quot;&gt;edit&lt;/a&gt;]&lt;/p&gt;</div><div class="line"></div><div class="line">&lt;div&gt;&#123;&#123;printf &quot;%s&quot; .Body&#125;&#125;&lt;/div&gt;</div></pre></td></tr></table></figure>
+<p>修改viewHandler：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">func viewHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/view/&quot;):]</div><div class="line">    p, _ := loadPage(title)</div><div class="line">    t, _ := template.ParseFiles(&quot;view.html&quot;)</div><div class="line">    t.Execute(w, p)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>好，该重点细节的时候来了。你看，我们两个handler都有相同的代码来渲染HTML，一个合格的程序员看到这种情况应该要将重复的部分模块化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) &#123;</div><div class="line">    t, _ := template.ParseFiles(tmpl + &quot;.html&quot;)</div><div class="line">    t.Execute(w, p)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后两个handler就变成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">func viewHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/view/&quot;):]</div><div class="line">    p, _ := loadPage(title)</div><div class="line">    renderTemplate(w, &quot;view&quot;, p)</div><div class="line">&#125;</div><div class="line">func editHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/edit/&quot;):]</div><div class="line">    p, err := loadPage(title)</div><div class="line">    if err != nil &#123;</div><div class="line">        p = &amp;Page&#123;Title: title&#125;</div><div class="line">    &#125;</div><div class="line">    renderTemplate(w, &quot;edit&quot;, p)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不要觉得代码反而变长了就不重要，甚至嘲笑，重要的是思想:)</p>
+<h2 id="处理好不存在的页面"><a href="#处理好不存在的页面" class="headerlink" title="处理好不存在的页面"></a>处理好不存在的页面</h2><p>如果你去访问/view/APageThatDoesntExist这样一个不存在的页面（假设他不存在），会发生什么？如果是上述代码的Web应用，你应该会看到一个包含着HTML的页面，这是因为我们在loadPage中忽略了文件不存在时的错误处理（这事终于被提上日程了），于是这样地读文件，它只读了个空。其实，如果请求的页面不存在，这样的请求就应该被重定向到编辑页面，这样用户就可以创建一个新的文件了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">func viewHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/view/&quot;):]</div><div class="line">    p, err := loadPage(title)</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Redirect(w, r, &quot;/edit/&quot;+title, http.StatusFound)</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    renderTemplate(w, &quot;view&quot;, p)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>http.Redirect函数参数包含了一个状态码http.StatusFound (302)，以及一个响应的目标地址。</p>
+<h2 id="保存页面"><a href="#保存页面" class="headerlink" title="保存页面"></a>保存页面</h2><p>函数saveHandler将会处理好编辑页面中表单的子任务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">func saveHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/save/&quot;):]</div><div class="line">    body := r.FormValue(&quot;body&quot;)</div><div class="line">    p := &amp;Page&#123;Title: title, Body: []byte(body)&#125;</div><div class="line">    p.save()</div><div class="line">    http.Redirect(w, r, &quot;/view/&quot;+title, http.StatusFound)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>页面标题（由URL提供）以及Body都会被保存在新的Page实例中。然后save()函数的调用就是要将数据写入到一个文件中，然后客户端就被重定向到/view/中对应的页面。</p>
+<p>其中函数FormValue()的返回值是string类型，我们需要将它转换为[]byte类型，这样才能用它来生成新的Page结构体实例。我们使用<code>[]byte(body)</code>来实现这个转换。</p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>我们的程序有几处地方忽略了不该忽略的错误，这是一个坏习惯，尤其是程序发生了你意想不到的错误的时候，你更会后悔莫及。一个较好的处理方案就是先程序自行处理好错误，然后将错误信息发送给用户。按照这样的方案，我们的应用必然会和我们预料的一样执行，并在有问题的时候通知用户。</p>
+<p>首先，我们需要在我们刚才分离出来的renderTemplate里面添加处理信息的代码（模块化的好处开始凸显）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) &#123;</div><div class="line">    t, err := template.ParseFiles(tmpl + &quot;.html&quot;)</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    err = t.Execute(w, p)</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>http.Error函数会给用户发送一个特定的状态码（这里是Internal Server Error）和错误信息。然后我们继续以同样的方法修改saveHandler：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">func saveHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title := r.URL.Path[len(&quot;/save/&quot;):]</div><div class="line">    body := r.FormValue(&quot;body&quot;)</div><div class="line">    p := &amp;Page&#123;Title: title, Body: []byte(body)&#125;</div><div class="line">    err := p.save()</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    http.Redirect(w, r, &quot;/view/&quot;+title, http.StatusFound)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当p.save()执行时发生了错误，就会调用http.Error，用户就会得知此错误信息。</p>
+<h2 id="模板的缓存"><a href="#模板的缓存" class="headerlink" title="模板的缓存"></a>模板的缓存</h2><p>当然这个简单的web应用还是不够高效，怎么个不够高效法呢？就是没有缓存，每次用户查看页面，Go程序都需要读取数据并重新渲染一下模板。也就是说，renderTemplate每次都调用ParseFiles。我们对其进行优化，比较好的方案是在程序初始化的时候调用ParseFiles一次，然后将所有模板都赋值到一个*Template里面，我们之后就用ExecuteTemplate来渲染特定的模板了。</p>
+<p>首先我们先用ParseFiles函数初始化一个全局变量，名为templates：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var templates = template.Must(template.ParseFiles(&quot;edit.html&quot;, &quot;view.html&quot;))</div></pre></td></tr></table></figure>
+<p>template.Must是个封装好的函数，它会在Parse返回err不为nil时，调用panic，而其他情况下，它会照常返回Template指针。Must的引入允许我们不用显式地处理错误，而我们只关注这个业务功能而忽略它还会返回一个错误。而panic在这里也用得较为合适 —— 如果模板都不能被加载了，那么能做得好的事就只能是退出程序了。</p>
+<p>ParseFiles函数的参数是任意数量的string，这些string对应着我们的模板文件。然后这些模板都会按照文件的命名加载到templates中。当然如果我们要添加更多的模板文件，我们只需要将它们的名字加到ParseFiles的参数里面。</p>
+<p>然后我们正式地对renderTemplate进行修改，改成调用templates.ExecuteTemplate的形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) &#123;</div><div class="line">    err := templates.ExecuteTemplate(w, tmpl+&quot;.html&quot;, p)</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>p.s.记得加上.html哦。</p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>其实如果你足够细心，你会发现一个安全隐患问题：用户可以在服务器应用下的任意路径做读取和修改。为了尽可能避免这个安全隐患，我们写一个函数，它可以用正则表达式来验证title的合法性。</p>
+<p>首先我们先将regexp加入到import列表中，然后我们需要创建一个全局变量来存储我们需要用到的表达式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var validPath = regexp.MustCompile(&quot;^/(edit|save|view)/([a-zA-Z0-9]+)$&quot;)</div></pre></td></tr></table></figure>
+<p>在这里，我们看到了熟悉的身影Must：regexp.MustCompile，它负责转换和遍历正则表达式，然后返回一个regexp.Regexp类型的变量。类似的，MustCompile和Compile这个妖艳贱货不一样，Must在处理失败的时候会返回一个panic。</p>
+<p>然后，我们可以开始写一个函数，它专门用于验证validPath的正确性并从中提取文件的title：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">func getTitle(w http.ResponseWriter, r *http.Request) (string, error) &#123;</div><div class="line">    m := validPath.FindStringSubmatch(r.URL.Path)</div><div class="line">    if m == nil &#123;</div><div class="line">        http.NotFound(w, r)</div><div class="line">        return &quot;&quot;, errors.New(&quot;Invalid Page Title&quot;)</div><div class="line">    &#125;</div><div class="line">    return m[2], nil // The title is the second subexpression.</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果路径合法，它会带着一个nil值返回（第二个返回值）；如果路径不合法，函数就会将“404 Not Found”写进HTTP连接，然后给handler返回一个error。当然，为了可以新建error，我们需要import一下errors包。</p>
+<p>然后我们修改所有handler，让它们在里面调用getTitle来验证合法性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">func viewHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title, err := getTitle(w, r)</div><div class="line">    if err != nil &#123;</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    p, err := loadPage(title)</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Redirect(w, r, &quot;/edit/&quot;+title, http.StatusFound)</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    renderTemplate(w, &quot;view&quot;, p)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func editHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title, err := getTitle(w, r)</div><div class="line">    if err != nil &#123;</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    p, err := loadPage(title)</div><div class="line">    if err != nil &#123;</div><div class="line">        p = &amp;Page&#123;Title: title&#125;</div><div class="line">    &#125;</div><div class="line">    renderTemplate(w, &quot;edit&quot;, p)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func saveHandler(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">    title, err := getTitle(w, r)</div><div class="line">    if err != nil &#123;</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    body := r.FormValue(&quot;body&quot;)</div><div class="line">    p := &amp;Page&#123;Title: title, Body: []byte(body)&#125;</div><div class="line">    err = p.save()</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    http.Redirect(w, r, &quot;/view/&quot;+title, http.StatusFound)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>心细的你又再次发现，为了捕捉和处理各种错误，我们使用了很多代码，而且还是很多重复的代码，那么我们能不能做点什么呢？也许抽象函数能帮得到我们。</p>
+<p>首先，我们重写一下handler的函数定义（以同样的形式，整齐的参数）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">func viewHandler(w http.ResponseWriter, r *http.Request, title string)</div><div class="line">func editHandler(w http.ResponseWriter, r *http.Request, title string)</div><div class="line">func saveHandler(w http.ResponseWriter, r *http.Request, title string)</div></pre></td></tr></table></figure>
+<p>接下来我们定义一个包装函数，它需要的参数类型是<em>上面我们声明的函数类型</em>，即<code>func (http.ResponseWriter, *http.Request, string)</code>，然后返回一个http.HandlerFunc类型的函数，这个包装函数的大致框架如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">func makeHandler(fn func (http.ResponseWriter, *http.Request, string)) http.HandlerFunc &#123;</div><div class="line">	return func(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">		// Here we will extract the page title from the Request,</div><div class="line">		// and call the provided handler &apos;fn&apos;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述函数return了一个函数自己内部定义的函数，称为闭包。在这里，变量fn（即makeHandler唯一的参数）被闭包直接用了，而fn可以是我们的view、save或者edit的handler。</p>
+<p>然后我们可以开始着手于闭包里面的实现，我们可以借用getTitle的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc &#123;</div><div class="line">    return func(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">        m := validPath.FindStringSubmatch(r.URL.Path)</div><div class="line">        if m == nil &#123;</div><div class="line">            http.NotFound(w, r)</div><div class="line">            return</div><div class="line">        &#125;</div><div class="line">        fn(w, r, m[2])</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>makeHandler返回的闭包是带有http.ResponseWriter和http.Request参数的函数。而在这里，闭包在请求路径中提取了title，然后使用TitleValidator正则来检验合法性。如果不合法，它将会向ResponseWriter 用http.NotFound函数写入一个error；如果合法，函数将会用ResponseWriter、Request和title三个参数来调用fn。</p>
+<p>然后我们就可以在main函数里面包装我们的handler了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">func main() &#123;</div><div class="line">    http.HandleFunc(&quot;/view/&quot;, makeHandler(viewHandler))</div><div class="line">    http.HandleFunc(&quot;/edit/&quot;, makeHandler(editHandler))</div><div class="line">    http.HandleFunc(&quot;/save/&quot;, makeHandler(saveHandler))</div><div class="line"></div><div class="line">    http.ListenAndServe(&quot;:8080&quot;, nil)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后我们去掉先前的getTitle，让handler变得苗条点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">func viewHandler(w http.ResponseWriter, r *http.Request, title string) &#123;</div><div class="line">    p, err := loadPage(title)</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Redirect(w, r, &quot;/edit/&quot;+title, http.StatusFound)</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    renderTemplate(w, &quot;view&quot;, p)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func editHandler(w http.ResponseWriter, r *http.Request, title string) &#123;</div><div class="line">    p, err := loadPage(title)</div><div class="line">    if err != nil &#123;</div><div class="line">        p = &amp;Page&#123;Title: title&#125;</div><div class="line">    &#125;</div><div class="line">    renderTemplate(w, &quot;edit&quot;, p)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func saveHandler(w http.ResponseWriter, r *http.Request, title string) &#123;</div><div class="line">    body := r.FormValue(&quot;body&quot;)</div><div class="line">    p := &amp;Page&#123;Title: title, Body: []byte(body)&#125;</div><div class="line">    err := p.save()</div><div class="line">    if err != nil &#123;</div><div class="line">        http.Error(w, err.Error(), http.StatusInternalServerError)</div><div class="line">        return</div><div class="line">    &#125;</div><div class="line">    http.Redirect(w, r, &quot;/view/&quot;+title, http.StatusFound)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="最终再试一下"><a href="#最终再试一下" class="headerlink" title="最终再试一下"></a>最终再试一下</h2><p>重新编译运行试试？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ go build wiki.go</div><div class="line">$ ./wiki</div></pre></td></tr></table></figure>
+<p>试试运行访问<a href="http://localhost:8080/view/ANewPage，看看会怎么样？它应该会给出一个新的编辑页面，然后你可以输入一些内容，你可以保存，在保存后它会将你重定向到新的wiki页面~" target="_blank" rel="external">http://localhost:8080/view/ANewPage，看看会怎么样？它应该会给出一个新的编辑页面，然后你可以输入一些内容，你可以保存，在保存后它会将你重定向到新的wiki页面~</a></p>
+<h3 id="P-S-如果你很混乱，那么我附上最终的全部代码？"><a href="#P-S-如果你很混乱，那么我附上最终的全部代码？" class="headerlink" title="P.S.如果你很混乱，那么我附上最终的全部代码？"></a>P.S.如果你很混乱，那么我附上最终的全部代码？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">// Copyright 2010 The Go Authors. All rights reserved.</div><div class="line">// Use of this source code is governed by a BSD-style</div><div class="line">// license that can be found in the LICENSE file.</div><div class="line"></div><div class="line">package main</div><div class="line"></div><div class="line">import (</div><div class="line">	&quot;html/template&quot;</div><div class="line">	&quot;io/ioutil&quot;</div><div class="line">	&quot;net/http&quot;</div><div class="line">	&quot;regexp&quot;</div><div class="line">)</div><div class="line"></div><div class="line">type Page struct &#123;</div><div class="line">	Title string</div><div class="line">	Body  []byte</div><div class="line">&#125;</div><div class="line"></div><div class="line">func (p *Page) save() error &#123;</div><div class="line">	filename := p.Title + &quot;.txt&quot;</div><div class="line">	return ioutil.WriteFile(filename, p.Body, 0600)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func loadPage(title string) (*Page, error) &#123;</div><div class="line">	filename := title + &quot;.txt&quot;</div><div class="line">	body, err := ioutil.ReadFile(filename)</div><div class="line">	if err != nil &#123;</div><div class="line">		return nil, err</div><div class="line">	&#125;</div><div class="line">	return &amp;Page&#123;Title: title, Body: body&#125;, nil</div><div class="line">&#125;</div><div class="line"></div><div class="line">func viewHandler(w http.ResponseWriter, r *http.Request, title string) &#123;</div><div class="line">	p, err := loadPage(title)</div><div class="line">	if err != nil &#123;</div><div class="line">		http.Redirect(w, r, &quot;/edit/&quot;+title, http.StatusFound)</div><div class="line">		return</div><div class="line">	&#125;</div><div class="line">	renderTemplate(w, &quot;view&quot;, p)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func editHandler(w http.ResponseWriter, r *http.Request, title string) &#123;</div><div class="line">	p, err := loadPage(title)</div><div class="line">	if err != nil &#123;</div><div class="line">		p = &amp;Page&#123;Title: title&#125;</div><div class="line">	&#125;</div><div class="line">	renderTemplate(w, &quot;edit&quot;, p)</div><div class="line">&#125;</div><div class="line"></div><div class="line">func saveHandler(w http.ResponseWriter, r *http.Request, title string) &#123;</div><div class="line">	body := r.FormValue(&quot;body&quot;)</div><div class="line">	p := &amp;Page&#123;Title: title, Body: []byte(body)&#125;</div><div class="line">	err := p.save()</div><div class="line">	if err != nil &#123;</div><div class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</div><div class="line">		return</div><div class="line">	&#125;</div><div class="line">	http.Redirect(w, r, &quot;/view/&quot;+title, http.StatusFound)</div><div class="line">&#125;</div><div class="line"></div><div class="line">var templates = template.Must(template.ParseFiles(&quot;edit.html&quot;, &quot;view.html&quot;))</div><div class="line"></div><div class="line">func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) &#123;</div><div class="line">	err := templates.ExecuteTemplate(w, tmpl+&quot;.html&quot;, p)</div><div class="line">	if err != nil &#123;</div><div class="line">		http.Error(w, err.Error(), http.StatusInternalServerError)</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var validPath = regexp.MustCompile(&quot;^/(edit|save|view)/([a-zA-Z0-9]+)$&quot;)</div><div class="line"></div><div class="line">func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc &#123;</div><div class="line">	return func(w http.ResponseWriter, r *http.Request) &#123;</div><div class="line">		m := validPath.FindStringSubmatch(r.URL.Path)</div><div class="line">		if m == nil &#123;</div><div class="line">			http.NotFound(w, r)</div><div class="line">			return</div><div class="line">		&#125;</div><div class="line">		fn(w, r, m[2])</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">func main() &#123;</div><div class="line">	http.HandleFunc(&quot;/view/&quot;, makeHandler(viewHandler))</div><div class="line">	http.HandleFunc(&quot;/edit/&quot;, makeHandler(editHandler))</div><div class="line">	http.HandleFunc(&quot;/save/&quot;, makeHandler(saveHandler))</div><div class="line"></div><div class="line">	http.ListenAndServe(&quot;:8080&quot;, nil)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>若有错误之处请指出，更多地关注<a href="http://www.jianyujianyu.com" target="_blank" rel="external">煎鱼</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+            <a href="/tags/web/" rel="tag"># web</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/02/thinking-about-cnn/" rel="next" title="思考卷积神经网络（CNN）中各种意义">
+                <i class="fa fa-chevron-left"></i> 思考卷积神经网络（CNN）中各种意义
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/01/talking-about-nlp-problems/" rel="prev" title="谈谈NLP中的终极问题">
+                谈谈NLP中的终极问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="John Doe" />
+          <p class="site-author-name" itemprop="name">John Doe</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">Artikel</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">Kategorien</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-name">Tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介和要求"><span class="nav-number">1.</span> <span class="nav-text">简介和要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始"><span class="nav-number">2.</span> <span class="nav-text">开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构体"><span class="nav-number">3.</span> <span class="nav-text">数据结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍一下net-http包"><span class="nav-number">4.</span> <span class="nav-text">介绍一下net/http包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将wiki和net-http包合并使用"><span class="nav-number">5.</span> <span class="nav-text">将wiki和net/http包合并使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wiki的编辑页面"><span class="nav-number">6.</span> <span class="nav-text">wiki的编辑页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用html-template包优雅地输出HTML"><span class="nav-number">7.</span> <span class="nav-text">使用html/template包优雅地输出HTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理好不存在的页面"><span class="nav-number">8.</span> <span class="nav-text">处理好不存在的页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保存页面"><span class="nav-number">9.</span> <span class="nav-text">保存页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">10.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板的缓存"><span class="nav-number">11.</span> <span class="nav-text">模板的缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证"><span class="nav-number">12.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包"><span class="nav-number">13.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最终再试一下"><span class="nav-number">14.</span> <span class="nav-text">最终再试一下</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#P-S-如果你很混乱，那么我附上最终的全部代码？"><span class="nav-number">14.1.</span> <span class="nav-text">P.S.如果你很混乱，那么我附上最终的全部代码？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

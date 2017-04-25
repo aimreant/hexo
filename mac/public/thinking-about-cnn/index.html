@@ -1,0 +1,820 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CNN,卷积神经网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="只是知道CNN是不够，我们需要对其进行解剖，继而分析不同部件存在的意义 CNN的目的简单来说，CNN的目的是以一定的模型对事物进行特征提取，而后根据特征对该事物进行分类、识别、预测或决策等。在这个过程里，最重要的步骤在于特征提取，即如何提取到能最大程度区分事物的特征。如果提取的特征无法将不同的事物进行划分，那么该特征提取步骤将毫无意义。而实现这个伟大的模型的，是对CNN进行迭代训练。">
+<meta name="keywords" content="CNN,卷积神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="思考卷积神经网络（CNN）中各种意义">
+<meta property="og:url" content="http://www.jianyujianyu.com/thinking-about-cnn/index.html">
+<meta property="og:site_name" content="人工智障">
+<meta property="og:description" content="只是知道CNN是不够，我们需要对其进行解剖，继而分析不同部件存在的意义 CNN的目的简单来说，CNN的目的是以一定的模型对事物进行特征提取，而后根据特征对该事物进行分类、识别、预测或决策等。在这个过程里，最重要的步骤在于特征提取，即如何提取到能最大程度区分事物的特征。如果提取的特征无法将不同的事物进行划分，那么该特征提取步骤将毫无意义。而实现这个伟大的模型的，是对CNN进行迭代训练。">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-09-02-14728207615074.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-09-02-14728208045910.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-09-02-14728212916756.gif">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-09-02-14728222809788.gif">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-09-02-14728233650926.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-09-02-14728233755870.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-09-02-14728250710656.png">
+<meta property="og:updated_time" content="2017-04-23T13:43:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="思考卷积神经网络（CNN）中各种意义">
+<meta name="twitter:description" content="只是知道CNN是不够，我们需要对其进行解剖，继而分析不同部件存在的意义 CNN的目的简单来说，CNN的目的是以一定的模型对事物进行特征提取，而后根据特征对该事物进行分类、识别、预测或决策等。在这个过程里，最重要的步骤在于特征提取，即如何提取到能最大程度区分事物的特征。如果提取的特征无法将不同的事物进行划分，那么该特征提取步骤将毫无意义。而实现这个伟大的模型的，是对CNN进行迭代训练。">
+<meta name="twitter:image" content="http://source.jianyujianyu.com/2016-09-02-14728207615074.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.jianyujianyu.com/thinking-about-cnn/"/>
+
+
+
+
+
+  <title>思考卷积神经网络（CNN）中各种意义 | 人工智障</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人工智障</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend-links">
+          <a href="/links" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            menu.friend-links
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/thinking-about-cnn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="煎鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yijie.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人工智障">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                思考卷积神经网络（CNN）中各种意义
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-09-02T14:00:01+08:00">
+                2016-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/图像处理/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/thinking-about-cnn/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>只是知道CNN是不够，我们需要对其进行解剖，继而分析不同部件存在的意义</em></p>
+<h2 id="CNN的目的"><a href="#CNN的目的" class="headerlink" title="CNN的目的"></a>CNN的目的</h2><p>简单来说，CNN的目的是以一定的模型对事物进行特征提取，而后根据特征对该事物进行分类、识别、预测或决策等。在这个过程里，最重要的步骤在于特征提取，即如何提取到能最大程度区分事物的特征。如果提取的特征无法将不同的事物进行划分，那么该特征提取步骤将毫无意义。而实现这个伟大的模型的，是对CNN进行迭代训练。</p>
+<a id="more"></a>
+<h3 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h3><p>在图像中（举个例子），目标事物的特征主要体现在像素与像素之间的关系。比如说，我们能区分一张图片中有一条直线，是因为直线上的像素与直线外邻像素的区别足够大（或直线两边的像素区别足够大），以至于这“直线”能被识别出来：</p>
+<p><img src="http://source.jianyujianyu.com/2016-09-02-14728207615074.jpg" alt="直线上的像素与直线外邻像素的区别足够大"></p>
+<p><img src="http://source.jianyujianyu.com/2016-09-02-14728208045910.jpg" alt="直线两边的像素区别足够大"></p>
+<p>除了直线外，其他特征也同理。在CNN中，大部分特征提取依赖于卷积运算。</p>
+<h2 id="卷积与特征提取"><a href="#卷积与特征提取" class="headerlink" title="卷积与特征提取"></a>卷积与特征提取</h2><p>卷积在此其实就是内积，步骤很简单，就是根据多个一定的权重（即卷积核），对一个块的像素进行内积运算，其输出就是提取的特征之一：</p>
+<p><img src="http://source.jianyujianyu.com/2016-09-02-14728212916756.gif" alt=""></p>
+<h3 id="选用卷积的原因"><a href="#选用卷积的原因" class="headerlink" title="选用卷积的原因"></a>选用卷积的原因</h3><h4 id="局部感知"><a href="#局部感知" class="headerlink" title="局部感知"></a>局部感知</h4><p>简单来说，卷积核的大小一般小于输入图像的大小（如果等于则是全连接），因此卷积提取出的特征会更多地关注局部 —— 这很符合日常我们接触到的图像处理。而每个神经元其实没有必要对全局图像进行感知，只需要对局部进行感知，然后在更高层将局部的信息综合起来就得到了全局的信息。</p>
+<h4 id="参数共享"><a href="#参数共享" class="headerlink" title="参数共享"></a>参数共享</h4><p>参数共享最大的作用莫过于很大限度地减少运算量了。</p>
+<h4 id="多核"><a href="#多核" class="headerlink" title="多核"></a>多核</h4><p>一般我们都不会只用一个卷积核对输入图像进行过滤，因为一个核的参数是固定的，其提取的特征也会单一化。这就有点像是我们平时如何客观看待事物，必须要从多个角度分析事物，这样才能尽可能地避免对该事物产生偏见。我们也需要多个卷积核对输入图像进行卷积。</p>
+<h4 id="Down-Pooling"><a href="#Down-Pooling" class="headerlink" title="Down-Pooling"></a>Down-Pooling</h4><p>卷积后再接上一个池化层（Pooling）简直就是绝配，能很好的聚合特征、降维来减少运算量。</p>
+<h4 id="多层卷积"><a href="#多层卷积" class="headerlink" title="多层卷积"></a>多层卷积</h4><p>层数越高，提取到的特征就越全局化。</p>
+<h2 id="池化"><a href="#池化" class="headerlink" title="池化"></a>池化</h2><p>池化，即对一块数据进行抽样或聚合，例如选择该区域的最大值（或平均值）取代该区域：</p>
+<p><img src="http://source.jianyujianyu.com/2016-09-02-14728222809788.gif" alt=""></p>
+<p>上图的池化例子，将10 <em> 10的区域池化层1 </em> 1的区域，这样使数据的敏感度大大降低，同时也在保留数据信息的基础上降低了数据的计算复杂度。</p>
+<h2 id="激活函数的意义"><a href="#激活函数的意义" class="headerlink" title="激活函数的意义"></a>激活函数的意义</h2><p>在数学上，激活函数的作用就是将输入数据映射到0到1上（tanh是映射-1到+1上）。至于映射的原因，除了对数据进行正则化外，大概是控制数据，使其只在一定的范围内。当然也有另外细节作用，例如Sigmoid（tanh）中，能在激活的时候，更关注数据在零（或中心点）前后的细小变化，而忽略数据在极端时的变化，例如ReLU还有避免梯度消失的作用。通常，Sigmoid（tanh）多用于全连接层，而ReLU多用于卷积层。</p>
+<p><img src="http://source.jianyujianyu.com/2016-09-02-14728233650926.jpg" alt=""></p>
+<p><img src="http://source.jianyujianyu.com/2016-09-02-14728233755870.jpg" alt=""></p>
+<p>或者我们换一个卷积核（换一种角度）来看待这个激活函数，如果我们把每一次激活动作当成一次分类，即对输入数据分成两类（0或1），那么激活函数得到的输出是在0到1的值，它可以代表着这次“分类”的归属度。如果我们把0规定为未激活，1表示激活，那么输出0.44就表示激活了44%。</p>
+<p>而激活函数的使用却有可能带来一定的负面影响（对于训练的负面影响），激活函数可能会使我们得输入数据都激活了大半，对此我们有另外的对策 —— LRN。</p>
+<h2 id="LRN的催化与抑制"><a href="#LRN的催化与抑制" class="headerlink" title="LRN的催化与抑制"></a>LRN的催化与抑制</h2><p>LRN，局部响应归一化。在神经学科中，有一个叫横向抑制（lateral inhibition）的概念，这种抑制的作用就是阻止兴奋神经元向邻近神经元传播其动作趋势，从而减少兴奋神经元的邻近神经元的激活程度。借鉴了这一生物现象（其实我们全部东西都是借鉴生物的，不是？），我们使用LRN层来对激活函数的输出数据进行横向抑制，在为激活函数收拾残局的同时，LRN还凸显了该区域的一个峰值 —— 这个峰值特征就是我们想要的特征。</p>
+<p>特别是ReLU，它无限制的激活使得我们更需要LRN来到数据进行归一化。在大规模的数据中，我们大多情况下更看重被凸显的高频特征。因此，用LRN对数据的峰值进行催化而对其周围进行抑制，何乐不为。</p>
+<h2 id="IP层"><a href="#IP层" class="headerlink" title="IP层"></a>IP层</h2><p><img src="http://source.jianyujianyu.com/2016-09-02-14728250710656.png" alt="BP神经网络中d的全连接层"></p>
+<p>在许多CNN的后部分，都存在着一个IP（Inner Product）层/内积层/fc（full connect）层/全连接层。这个全连接网络的代表性层级，其存在于CNN的意义我不得而知。在许多论文中，它替代了softmax来特征负责最终的提取，而有人也指出CNN最后可以不用IP层。</p>
+<h2 id="Dropout的舍弃"><a href="#Dropout的舍弃" class="headerlink" title="Dropout的舍弃"></a>Dropout的舍弃</h2><p>舍弃一直是一个伟大的哲学，生物的进化上例子比比皆是。Dropout的任务就是在训练时，通过设置阈值并与某些隐含层节点的权重对比，让特定的权重不工作 —— 在该层舍弃这些权重。Dropout的作用也很明显，除了加速运算外，就是防止过拟合了。</p>
+<p>若有错误之处请指出，更多地关注<a href="http://www.jianyujianyu.com">煎鱼</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CNN/" rel="tag"># CNN</a>
+          
+            <a href="/tags/卷积神经网络/" rel="tag"># 卷积神经网络</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/compile-tensorflow-on-raspberry2or3/" rel="next" title="在树莓派2或3中编译谷歌深度学习框架TensorFlow">
+                <i class="fa fa-chevron-left"></i> 在树莓派2或3中编译谷歌深度学习框架TensorFlow
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/writing-web-using-go/" rel="prev" title="用Go写一个简单Web应用">
+                用Go写一个简单Web应用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/yijie.jpg"
+               alt="煎鱼" />
+          <p class="site-author-name" itemprop="name">煎鱼</p>
+           
+              <p class="site-description motion-element" itemprop="description">后台狗煎鱼</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1797816007/profile" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/aimreant" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jianyujianyu" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CNN的目的"><span class="nav-number">1.</span> <span class="nav-text">CNN的目的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特征"><span class="nav-number">1.1.</span> <span class="nav-text">特征</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积与特征提取"><span class="nav-number">2.</span> <span class="nav-text">卷积与特征提取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选用卷积的原因"><span class="nav-number">2.1.</span> <span class="nav-text">选用卷积的原因</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#局部感知"><span class="nav-number">2.1.1.</span> <span class="nav-text">局部感知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数共享"><span class="nav-number">2.1.2.</span> <span class="nav-text">参数共享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多核"><span class="nav-number">2.1.3.</span> <span class="nav-text">多核</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Down-Pooling"><span class="nav-number">2.1.4.</span> <span class="nav-text">Down-Pooling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多层卷积"><span class="nav-number">2.1.5.</span> <span class="nav-text">多层卷积</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#池化"><span class="nav-number">3.</span> <span class="nav-text">池化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活函数的意义"><span class="nav-number">4.</span> <span class="nav-text">激活函数的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRN的催化与抑制"><span class="nav-number">5.</span> <span class="nav-text">LRN的催化与抑制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP层"><span class="nav-number">6.</span> <span class="nav-text">IP层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dropout的舍弃"><span class="nav-number">7.</span> <span class="nav-text">Dropout的舍弃</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">煎鱼</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "3a7988cd24da4e4a9bb9c1d354aed4a1",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

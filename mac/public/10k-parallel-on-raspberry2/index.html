@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="后台,Raspberry,闲聊," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="道听途说后的感想总能得知Nginx的最大并发量能去到10W！简直吓到我，也不知道是我弱鸡还是我没弄过，反正10W的并发量我是没有弄过出来。不过嘛，说不定一台好CPU、大内存、高IO、高优化的服务器随便就可以上十万了，怎么说也是XEON的CPU然后来个几百几十G的内存是吧。那么在性能那么低的树莓派上并发量又能去到多少呢？网友总会说用树莓派当服务器还是算了吧，就这烂性能。这我也深有体会，在上面搭建的M">
+<meta name="keywords" content="后台,Raspberry,闲聊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在树莓派2上Nginx并发1W到底有多难">
+<meta property="og:url" content="http://www.jianyujianyu.com/10k-parallel-on-raspberry2/index.html">
+<meta property="og:site_name" content="人工智障">
+<meta property="og:description" content="道听途说后的感想总能得知Nginx的最大并发量能去到10W！简直吓到我，也不知道是我弱鸡还是我没弄过，反正10W的并发量我是没有弄过出来。不过嘛，说不定一台好CPU、大内存、高IO、高优化的服务器随便就可以上十万了，怎么说也是XEON的CPU然后来个几百几十G的内存是吧。那么在性能那么低的树莓派上并发量又能去到多少呢？网友总会说用树莓派当服务器还是算了吧，就这烂性能。这我也深有体会，在上面搭建的M">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-05-13-14631237005719.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-05-13-14631243899899.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-05-13-14631242372230.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-05-13-14631246342501.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-05-13-14631248722938.jpg">
+<meta property="og:image" content="http://source.jianyujianyu.com/2016-05-13-14631251132157.jpg">
+<meta property="og:updated_time" content="2017-04-23T13:42:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在树莓派2上Nginx并发1W到底有多难">
+<meta name="twitter:description" content="道听途说后的感想总能得知Nginx的最大并发量能去到10W！简直吓到我，也不知道是我弱鸡还是我没弄过，反正10W的并发量我是没有弄过出来。不过嘛，说不定一台好CPU、大内存、高IO、高优化的服务器随便就可以上十万了，怎么说也是XEON的CPU然后来个几百几十G的内存是吧。那么在性能那么低的树莓派上并发量又能去到多少呢？网友总会说用树莓派当服务器还是算了吧，就这烂性能。这我也深有体会，在上面搭建的M">
+<meta name="twitter:image" content="http://source.jianyujianyu.com/2016-05-13-14631237005719.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.jianyujianyu.com/10k-parallel-on-raspberry2/"/>
+
+
+
+
+
+  <title>在树莓派2上Nginx并发1W到底有多难 | 人工智障</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人工智障</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend-links">
+          <a href="/links" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            menu.friend-links
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/10k-parallel-on-raspberry2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="煎鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yijie.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人工智障">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                在树莓派2上Nginx并发1W到底有多难
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-13T07:47:00+08:00">
+                2016-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Raspberry/" itemprop="url" rel="index">
+                    <span itemprop="name">Raspberry</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/10k-parallel-on-raspberry2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="道听途说后的感想"><a href="#道听途说后的感想" class="headerlink" title="道听途说后的感想"></a>道听途说后的感想</h2><p>总能得知Nginx的最大并发量能去到10W！简直吓到我，也不知道是我弱鸡还是我没弄过，反正10W的并发量我是没有弄过出来。不过嘛，说不定一台好CPU、大内存、高IO、高优化的服务器随便就可以上十万了，怎么说也是XEON的CPU然后来个几百几十G的内存是吧。那么在性能那么低的树莓派上并发量又能去到多少呢？网友总会说用树莓派当服务器还是算了吧，就这烂性能。这我也深有体会，在上面搭建的MC服务器简直没法玩啊！好吧，毕竟只是个值一两百块钱的板子而已：</p>
+<ul>
+<li>CPU：4核，性能大概只相当于196MHZ的i3（网友反映的）</li>
+<li>内存：1G，简直不够用好吧！</li>
+<li>硬盘IO：十几M每秒吧，其实就是SD卡的IO</li>
+</ul>
+<p>你看看这性能：<br>1.根本不能指望SD的IO能干嘛，换句话来说，传统数据库的读写、SWAP的换出换入等和外存有关的都不能实现（这样会拖时间而且换入换出的时候CPU根本承受不了！）<br>2.因为上面的原因，几乎所有的东西都得堆在内存，1G的内存<br>3.CPU很low，超频了也不过是零点几、零点零几的提升，如果还不用多线程榨干它简直大逆不道</p>
+<p>其实看到这配置估计就有很多人会说：欸，你这不是傻嘛，这么点可怜的性能怎么提升也不可能有什么效果的，还不如去用真·服务器去。其实我主要是不太想这个东西积尘了，也想折腾一下这方面的而已。</p>
+<a id="more"></a>
+<h2 id="除掉Raspbian的限制"><a href="#除掉Raspbian的限制" class="headerlink" title="除掉Raspbian的限制"></a>除掉Raspbian的限制</h2><h3 id="修改最大连接数-somaxconn"><a href="#修改最大连接数-somaxconn" class="headerlink" title="修改最大连接数 somaxconn"></a>修改最大连接数 somaxconn</h3><p>echo 50000 &gt; /proc/sys/net/core/somaxconn</p>
+<h3 id="加快tcp连接的回收"><a href="#加快tcp连接的回收" class="headerlink" title="加快tcp连接的回收"></a>加快tcp连接的回收</h3><p>echo 1 &gt; /proc/sys/net/ipv4/tcp_tw_recycle</p>
+<h3 id="tcp重用"><a href="#tcp重用" class="headerlink" title="tcp重用"></a>tcp重用</h3><p>echo 1 &gt; /proc/sys/net/ipv4/tcp_tw_reuse </p>
+<h3 id="修改成不做洪水抵遇"><a href="#修改成不做洪水抵遇" class="headerlink" title="修改成不做洪水抵遇"></a>修改成不做洪水抵遇</h3><p>echo 0 &gt; /proc/sys/net/ipv4/tcp_syncookies</p>
+<h3 id="修改系统的打开文件数的限制"><a href="#修改系统的打开文件数的限制" class="headerlink" title="修改系统的打开文件数的限制"></a>修改系统的打开文件数的限制</h3><p>ulimit -n 50000</p>
+<p>直接用脚本一次性写入即可（毕竟我更喜欢做个懒人）<br><img src="http://source.jianyujianyu.com/2016-05-13-14631237005719.jpg" alt=""></p>
+<p>p.s.其实上面的那个50000是有点夸张而已，树莓派那么低的性能。。</p>
+<p>当然还有很多各种各样的参数，我也不做详细解读，例如：<br>fs.file-max = 999999<br>net.ipv4.tcp_tw_reuse = 1<br>net.ipv4.tcp_keepalive_time = 600<br>net.ipv4.tcp_fin_timeout = 30<br>net.ipv4.tcp_max_tw_buckets = 5000<br>net.ipv4.ip_local_port_range = 1024    61000<br>net.ipv4.tcp_rmem = 4096 32768 262142<br>net.ipv4.tcp_wmem = 4096 32768 262142<br>net.core.netdev_max_backlog = 8096<br>net.core.rmem_default = 262144<br>net.core.wmem_default = 262144<br>net.core.rmem_max = 2097152<br>net.core.wmem_max = 2097152<br>net.ipv4.tcp_syncookies = 1<br>net.ipv4.tcp_max_syn.backlog=1024<br>参数值可以忽略。</p>
+<h2 id="修改Nginx的配置"><a href="#修改Nginx的配置" class="headerlink" title="修改Nginx的配置"></a>修改Nginx的配置</h2><p>这一步本来是最重要的，但是由于性能的原因，也就只能尽量了。</p>
+<h3 id="修改worker-processes并绑定CPU"><a href="#修改worker-processes并绑定CPU" class="headerlink" title="修改worker_processes并绑定CPU"></a>修改worker_processes并绑定CPU</h3><p>尽量地多线程处理请求，并且在低性能CPU中一个worker绑定一个CPU，将切换worker的资源消耗最小化：<br><img src="http://source.jianyujianyu.com/2016-05-13-14631243899899.jpg" alt=""></p>
+<h3 id="修改worker-rlimit-nofile配置"><a href="#修改worker-rlimit-nofile配置" class="headerlink" title="修改worker_rlimit_nofile配置"></a>修改worker_rlimit_nofile配置</h3><p>也就是修改nginx的最高打开文件数</p>
+<h3 id="修改worker-connections"><a href="#修改worker-connections" class="headerlink" title="修改worker_connections"></a>修改worker_connections</h3><p>修改Nginx的每个worker的最大连接数</p>
+<p><img src="http://source.jianyujianyu.com/2016-05-13-14631242372230.jpg" alt=""></p>
+<h3 id="负载均衡的上游服务器"><a href="#负载均衡的上游服务器" class="headerlink" title="负载均衡的上游服务器"></a>负载均衡的上游服务器</h3><p>开8个，用Python的Tornado（如果要连Tomcat的话，要自己调好参数，不然会拒绝大部分请求的，而且还有控制好tomcat不断飙升的占用内存，树莓派的1G承受不住！）<br><img src="http://source.jianyujianyu.com/2016-05-13-14631246342501.jpg" alt=""></p>
+<h2 id="后台搭建"><a href="#后台搭建" class="headerlink" title="后台搭建"></a>后台搭建</h2><p>已经说过了用Python的Tornado做后台，直接就可以用它的demo中的blog来测试，选用blog原因如下：</p>
+<ul>
+<li>具有前端模板的渲染</li>
+<li>具有后台数据的提取</li>
+<li>具有登录鉴权系统</li>
+</ul>
+<p>这样的后台，虽然小并且简陋，但是与大部分实际应用相类似，因此选用。而且也特意不用缓存，这样子直接测它的性能。blog大概就是这个样子的：（其实挺丑的，测试数据请忽略）<br><img src="http://source.jianyujianyu.com/2016-05-13-14631248722938.jpg" alt=""></p>
+<h2 id="使用ApacheBench测试"><a href="#使用ApacheBench测试" class="headerlink" title="使用ApacheBench测试"></a>使用ApacheBench测试</h2><p>接下来就是使用ab测试了，而且是用树莓派本身来发出请求测试，这样可以忽略网络的作用（其实是因为我手头上没有linux设备，Mac测试浮动太大- -）。</p>
+<p>ab -c 8000 -n 50000  <a href="http://127.0.0.1/" target="_blank" rel="external">http://127.0.0.1/</a><br>（根本不敢用1万的并发量好吧！）</p>
+<p>结果如图：<br><img src="http://source.jianyujianyu.com/2016-05-13-14631251132157.jpg" alt=""></p>
+<p>可以看出来：</p>
+<ul>
+<li>5万请求中有一千多的失败（对于这样的“服务器”已经很好了！！）</li>
+<li>用时好慢</li>
+<li>看到Processing和Waiting的时间直接人都崩溃了好吗</li>
+</ul>
+<p>可以看得出来树莓派不能干这事（怎么感觉只是在自己打自己脸而已），别说1万，8000或者5000都难，所以就不要用树莓派来做服务器啦~（搭建集群的土豪请忽略）</p>
+<p>若有错误之处请指出，更多地关注<a href="http://www.jianyujianyu.com">煎鱼</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/后台/" rel="tag"># 后台</a>
+          
+            <a href="/tags/Raspberry/" rel="tag"># Raspberry</a>
+          
+            <a href="/tags/闲聊/" rel="tag"># 闲聊</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/learing-svm/" rel="next" title="如何理解SVM | 支持向量机之我见">
+                <i class="fa fa-chevron-left"></i> 如何理解SVM | 支持向量机之我见
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/yijie.jpg"
+               alt="煎鱼" />
+          <p class="site-author-name" itemprop="name">煎鱼</p>
+           
+              <p class="site-description motion-element" itemprop="description">后台狗煎鱼</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1797816007/profile" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/aimreant" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jianyujianyu" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#道听途说后的感想"><span class="nav-number">1.</span> <span class="nav-text">道听途说后的感想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#除掉Raspbian的限制"><span class="nav-number">2.</span> <span class="nav-text">除掉Raspbian的限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改最大连接数-somaxconn"><span class="nav-number">2.1.</span> <span class="nav-text">修改最大连接数 somaxconn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加快tcp连接的回收"><span class="nav-number">2.2.</span> <span class="nav-text">加快tcp连接的回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp重用"><span class="nav-number">2.3.</span> <span class="nav-text">tcp重用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改成不做洪水抵遇"><span class="nav-number">2.4.</span> <span class="nav-text">修改成不做洪水抵遇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改系统的打开文件数的限制"><span class="nav-number">2.5.</span> <span class="nav-text">修改系统的打开文件数的限制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改Nginx的配置"><span class="nav-number">3.</span> <span class="nav-text">修改Nginx的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改worker-processes并绑定CPU"><span class="nav-number">3.1.</span> <span class="nav-text">修改worker_processes并绑定CPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改worker-rlimit-nofile配置"><span class="nav-number">3.2.</span> <span class="nav-text">修改worker_rlimit_nofile配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改worker-connections"><span class="nav-number">3.3.</span> <span class="nav-text">修改worker_connections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#负载均衡的上游服务器"><span class="nav-number">3.4.</span> <span class="nav-text">负载均衡的上游服务器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后台搭建"><span class="nav-number">4.</span> <span class="nav-text">后台搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用ApacheBench测试"><span class="nav-number">5.</span> <span class="nav-text">使用ApacheBench测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">煎鱼</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "3a7988cd24da4e4a9bb9c1d354aed4a1",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

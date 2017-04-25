@@ -1,0 +1,826 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="caffe," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="工作室的内网出了问题，不能修改以前写的文档，于是我便修改了放在个人网站 版本linux系统：Ubuntu 14.04.5 （64位）显卡：GTX1080 + GTX750Ticuda: cuda_8.0.27_linux.run （传送门：https://developer.nvidia.com/cuda-toolkit）显卡驱动：NVIDIA-Linux-x86_64-367.27.run （传">
+<meta name="keywords" content="caffe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu14.04 + cuda8 + caffe + cudnn5.0 (GTX1080 + GTX750Ti)">
+<meta property="og:url" content="http://www.jianyujianyu.com/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/index.html">
+<meta property="og:site_name" content="人工智障">
+<meta property="og:description" content="工作室的内网出了问题，不能修改以前写的文档，于是我便修改了放在个人网站 版本linux系统：Ubuntu 14.04.5 （64位）显卡：GTX1080 + GTX750Ticuda: cuda_8.0.27_linux.run （传送门：https://developer.nvidia.com/cuda-toolkit）显卡驱动：NVIDIA-Linux-x86_64-367.27.run （传">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Cache_3fb1040ea54e9bed..jpg">
+<meta property="og:updated_time" content="2017-04-23T13:41:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu14.04 + cuda8 + caffe + cudnn5.0 (GTX1080 + GTX750Ti)">
+<meta name="twitter:description" content="工作室的内网出了问题，不能修改以前写的文档，于是我便修改了放在个人网站 版本linux系统：Ubuntu 14.04.5 （64位）显卡：GTX1080 + GTX750Ticuda: cuda_8.0.27_linux.run （传送门：https://developer.nvidia.com/cuda-toolkit）显卡驱动：NVIDIA-Linux-x86_64-367.27.run （传">
+<meta name="twitter:image" content="https://oda3wj69k.qnssl.com/Cache_3fb1040ea54e9bed..jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.jianyujianyu.com/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/"/>
+
+
+
+
+
+  <title>ubuntu14.04 + cuda8 + caffe + cudnn5.0 (GTX1080 + GTX750Ti) | 人工智障</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人工智障</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend-links">
+          <a href="/links" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            menu.friend-links
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="煎鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yijie.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人工智障">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ubuntu14.04 + cuda8 + caffe + cudnn5.0 (GTX1080 + GTX750Ti)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-10T03:15:59+08:00">
+                2017-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/caffe/" itemprop="url" rel="index">
+                    <span itemprop="name">caffe</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>工作室的内网出了问题，不能修改以前写的文档，于是我便修改了放在个人网站</em></p>
+<h2 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h2><p>linux系统：Ubuntu 14.04.5 （64位）<br>显卡：GTX1080 + GTX750Ti<br>cuda: cuda_8.0.27_linux.run （传送门：<a href="https://developer.nvidia.com/cuda-toolkit）" target="_blank" rel="external">https://developer.nvidia.com/cuda-toolkit）</a><br>显卡驱动：NVIDIA-Linux-x86_64-367.27.run （传送门：<a href="http://www.geforce.cn/drivers/results/104314）" target="_blank" rel="external">http://www.geforce.cn/drivers/results/104314）</a><br>cudnn：cudnn-5.1 ( for CUDA 8 rc) （传送门：<a href="https://developer.nvidia.com/cudnn）" target="_blank" rel="external">https://developer.nvidia.com/cudnn）</a><br>BLAS：BLAS选用intel的MKL parallel_studio_xe_2016，或者Atlas</p>
+<p>以下默认使用root用户，sudo已忽略</p>
+<h2 id="安装ubuntu："><a href="#安装ubuntu：" class="headerlink" title="安装ubuntu："></a>安装ubuntu：</h2><p><strong>需要注意事项：</strong><br>ubuntu14.04默认开源驱动不兼容GTX1080，因此需要先拔掉GTX1080或将GTX750Ti置于PCI优先位置<br>在显示屏使用GTX750Ti的情况下，安装以及启动ubuntu</p>
+<a id="more"></a>
+<h2 id="禁用nouveau驱动"><a href="#禁用nouveau驱动" class="headerlink" title="禁用nouveau驱动"></a>禁用nouveau驱动</h2><p>按Ctrl+Alt+F1进入命令提示符,新建一个黑名单文件</p>
+<p><code>vim /etc/modprobe.d/blacklist-nouveau.conf</code></p>
+<p>输入</p>
+<p><code>blacklist nouveau options nouveau modset=0</code></p>
+<p>保存退出（:wq)<br>然后执行</p>
+<p><code>update-initramfs -u</code></p>
+<p>执行 <code>lspci | grep nouveau</code>查看是否有内容<br>如果没有内容 ，说明禁用成功，如果有内容，就重启一下再查看<br><code>reboot</code><br>重启后，进入登录界面的时候，不要登录进入桌面，直接按Ctrl+Alt+F1进入命令提示符。</p>
+<h2 id="安装CUDA和NVIDIA驱动"><a href="#安装CUDA和NVIDIA驱动" class="headerlink" title="安装CUDA和NVIDIA驱动"></a>安装CUDA和NVIDIA驱动</h2><p>（目前使用最新的CUDA里面包含的NVIDIA驱动足矣）</p>
+<p><code>chmod 755 NVIDIA-Linux-x86_64-367.27.run  //获取权限</code><br><code>./NVIDIA-Linux-x86_64-367.27.run  //安装驱动</code></p>
+<p>安装后就可以用nvidia-smi命令查看显卡和驱动情况。</p>
+<p><code>chmod 755 cuda_8.0.27_linux.run</code><br><code>./cuda_8.0.27_linux.run</code></p>
+<p>PS：8.0.27可能已经过旧，请到官网下载最新版<br>需要注意该版本CUDA8中的NVIDIA驱动太旧，而且我们已经安装了，所以安装CUDA过程中唯有驱动不安装<br>除了第二项“”是否安装显卡驱动“选择no之外，其他全部按照默认设定<br>安装过程显示如下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">Do you accept the previously read EULA?</div><div class="line">accept/decline/quit: accept</div><div class="line"></div><div class="line">Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 361.62?</div><div class="line">(y)es/(n)o/(q)uit: n</div><div class="line"></div><div class="line">Install the CUDA 8.0 Toolkit?</div><div class="line">(y)es/(n)o/(q)uit: y</div><div class="line"></div><div class="line">Enter Toolkit Location</div><div class="line">[ default is /usr/local/cuda-8.0 ]:</div><div class="line"></div><div class="line">Do you want to install a symbolic link at /usr/local/cuda?</div><div class="line">(y)es/(n)o/(q)uit: y</div><div class="line"></div><div class="line">Install the CUDA 8.0 Samples?</div><div class="line">(y)es/(n)o/(q)uit: y</div><div class="line"></div><div class="line">Enter CUDA Samples Location</div><div class="line">[ default is /home/zhou ]:</div><div class="line"></div><div class="line">Installing the CUDA Toolkit in /usr/local/cuda-8.0 …</div><div class="line">Missing recommended library: libGLU.so</div><div class="line">Missing recommended library: libX11.so</div><div class="line">Missing recommended library: libXi.so</div><div class="line">Missing recommended library: libXmu.so</div><div class="line"></div><div class="line">Installing the CUDA Samples in /root …</div><div class="line">Copying samples to /root/NVIDIA_CUDA-8.0_Samples now…</div><div class="line">Finished copying samples.</div><div class="line">.</div><div class="line">.</div><div class="line">.</div></pre></td></tr></table></figure>
+<p>设置环境变量<br>（error while loading shared libraries: xxx.so.x” 错误的原因和解决办法）</p>
+<p><code>vim /etc/profile</code><br>加上两句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export PATH=/usr/local/cuda/bin:$PATH</div><div class="line">export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH</div></pre></td></tr></table></figure>
+<p><code>vim /etc/ld.so.conf.d/cuda.conf</code><br>中添加<br><code>/usr/local/cuda/lib64</code></p>
+<p>执行<code>ldconfig</code></p>
+<h2 id="make-CUDA库"><a href="#make-CUDA库" class="headerlink" title="make CUDA库"></a>make CUDA库</h2><p>安装依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev  libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx</div><div class="line">cd /usr/local/cuda/samples</div><div class="line">make all -j8</div></pre></td></tr></table></figure>
+<p>以上的make编译时为了测试cuda库和环境安装成功并编译玩一下。</p>
+<p><code>cd ./bin/x86_64/linux/release</code><br><code>./deviceQuery</code>    查询显卡信息</p>
+<p><img src="https://oda3wj69k.qnssl.com/Cache_3fb1040ea54e9bed..jpg" alt=""></p>
+<h2 id="安装CUDNN5-0"><a href="#安装CUDNN5-0" class="headerlink" title="安装CUDNN5.0"></a>安装CUDNN5.0</h2><p>解压好CUDNN得到cuda目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cd cuda</div><div class="line">sudo cp lib64/lib* /usr/local/cuda/lib64/</div><div class="line">sudo cp include/cudnn.h /usr/local/cuda/include/</div><div class="line">cd /usr/local/cuda/lib64/</div><div class="line">sudo chmod +r libcudnn.so.5.0.5</div><div class="line">sudo ln -sf libcudnn.so.5.0.5 libcudnn.so.5</div><div class="line">sudo ln -sf libcudnn.so.5 libcudnn.so</div><div class="line">sudo ldconfig</div></pre></td></tr></table></figure>
+<h2 id="安装OPENCV"><a href="#安装OPENCV" class="headerlink" title="安装OPENCV"></a>安装OPENCV</h2><p>推荐安装pyenv来管理python版本环境（自行查找）</p>
+<p>提前安装libegl的库，免得安装到一并报错：<br><code>apt install libegl1-mesa libegl1-mesa-drivers</code></p>
+<p>参考<a href="https://github.com/jayrambhia/Install-OpenCV一键安装opencv" target="_blank" rel="external">https://github.com/jayrambhia/Install-OpenCV一键安装opencv</a></p>
+<h2 id="编译安装Caffe"><a href="#编译安装Caffe" class="headerlink" title="编译安装Caffe"></a>编译安装Caffe</h2><h3 id="安装依赖："><a href="#安装依赖：" class="headerlink" title="安装依赖："></a>安装依赖：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler libatlas-base-dev libgflags-dev libgoogle-glog-dev  liblmdb-dev  libboost-all-dev</div></pre></td></tr></table></figure>
+<h3 id="如果不用mkl，而是用atlas，则安装"><a href="#如果不用mkl，而是用atlas，则安装" class="headerlink" title="如果不用mkl，而是用atlas，则安装:"></a>如果不用mkl，而是用atlas，则安装:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install libatlas-dev libatlas-base-dev</div></pre></td></tr></table></figure>
+<h3 id="所有python依赖-（按照不同情况自行查看关系安装）"><a href="#所有python依赖-（按照不同情况自行查看关系安装）" class="headerlink" title="所有python依赖:（按照不同情况自行查看关系安装）"></a>所有python依赖:（按照不同情况自行查看关系安装）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt-get install python-dev python-pip cython python-numpy python-scipy python-opencv</div></pre></td></tr></table></figure>
+<h3 id="在github上clone-Caffe：-https-github-com-BVLC-caffe"><a href="#在github上clone-Caffe：-https-github-com-BVLC-caffe" class="headerlink" title="在github上clone Caffe： https://github.com/BVLC/caffe"></a>在github上clone Caffe： <a href="https://github.com/BVLC/caffe" target="_blank" rel="external">https://github.com/BVLC/caffe</a></h3><p>进入其目录，并按照实际修改Makefile.config，主要是启用CUDNN，改用MKL（如果安装了），然后编译：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/BVLC/caffe</div><div class="line">cd caffe</div><div class="line">make all -j8</div><div class="line">make test -j8</div><div class="line">make runtest -j8</div></pre></td></tr></table></figure>
+<p>PS：j后面的8表示启用多少线程来编译，视性能而定</p>
+<p>如果还需要使用pycaffe：需要对pycaffe进行编译：</p>
+<p><code>make pycaffe -j8</code></p>
+<p>而后进入python目录，用pip安装依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install python-pip</div><div class="line">cd python</div><div class="line">pip install -r requirements.txt</div></pre></td></tr></table></figure>
+<p>顺手把graphviz也安装了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install graphviz graphviz-dev</div><div class="line">pip install pydot</div><div class="line">pip install pygraphviz</div></pre></td></tr></table></figure>
+<p>最后添加pythonpath的环境变量：<br><code>vim /etc/profile</code><br>添加<code>export PYTHONPATH=/root/caffe/python:$PYTHONPATH  # path to pytho in caffe</code><br>然后执行 <code>source /etc/profile</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/caffe/" rel="tag"># caffe</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/chinese-unicode-in-python2.x/" rel="prev" title="Python 2.x 的中文编码问题">
+                Python 2.x 的中文编码问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/yijie.jpg"
+               alt="煎鱼" />
+          <p class="site-author-name" itemprop="name">煎鱼</p>
+           
+              <p class="site-description motion-element" itemprop="description">后台狗煎鱼</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1797816007/profile" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/aimreant" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jianyujianyu" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本"><span class="nav-number">1.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装ubuntu："><span class="nav-number">2.</span> <span class="nav-text">安装ubuntu：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#禁用nouveau驱动"><span class="nav-number">3.</span> <span class="nav-text">禁用nouveau驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CUDA和NVIDIA驱动"><span class="nav-number">4.</span> <span class="nav-text">安装CUDA和NVIDIA驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-CUDA库"><span class="nav-number">5.</span> <span class="nav-text">make CUDA库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CUDNN5-0"><span class="nav-number">6.</span> <span class="nav-text">安装CUDNN5.0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装OPENCV"><span class="nav-number">7.</span> <span class="nav-text">安装OPENCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译安装Caffe"><span class="nav-number">8.</span> <span class="nav-text">编译安装Caffe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖："><span class="nav-number">8.1.</span> <span class="nav-text">安装依赖：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果不用mkl，而是用atlas，则安装"><span class="nav-number">8.2.</span> <span class="nav-text">如果不用mkl，而是用atlas，则安装:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所有python依赖-（按照不同情况自行查看关系安装）"><span class="nav-number">8.3.</span> <span class="nav-text">所有python依赖:（按照不同情况自行查看关系安装）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在github上clone-Caffe：-https-github-com-BVLC-caffe"><span class="nav-number">8.4.</span> <span class="nav-text">在github上clone Caffe： https://github.com/BVLC/caffe</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">煎鱼</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "3a7988cd24da4e4a9bb9c1d354aed4a1",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
