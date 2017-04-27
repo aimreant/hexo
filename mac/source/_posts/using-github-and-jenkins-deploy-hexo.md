@@ -1,5 +1,5 @@
 title: [小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件
-categories: jenkins
+categories: CI
 tags: [jenkins,hexo,blog]
 date: 2017-4-27 09:49:38
 ---
