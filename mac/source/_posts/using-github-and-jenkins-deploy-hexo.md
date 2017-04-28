@@ -269,7 +269,15 @@ browser也顺便一填
 
 调试很简单。先把代码clone下来本地，然后稍稍改动一个无关文件，再push，之后便是感受是否这套环境是否能自动化部署。
 
+### Push代码
+
+各种push方式任君选择
+
 ![](https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-27%20at%2012.11.57%20AM.png)
+
+
+
+### 查看日志
 
 push成功后，github hook会通知所填写的jenkins，如果jenkins没有调起job，则有可能是hook或者配置job里面的Github hook trigger没有填写正确。
 
@@ -280,6 +288,20 @@ push成功后，github hook会通知所填写的jenkins，如果jenkins没有调
 想要查看错误日志，点击左上角的Github Hook Log或者Console Output，即可根据这些日志对配置进行调整。
 
 ![](https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-27%20at%2012.12.57%20AM.png)
+
+Output大致都如下：
+
+![](https://oda3wj69k.qnssl.com/BaiduHi_2017-4-28_10-25-53.png)
+
+
+
+### 访问网站
+
+不是红灯一般都是成功的，访问网站体验一下，[jianyujianyu.com](https://www.jianyujianyu.com/) ：
+
+![](https://oda3wj69k.qnssl.com/BaiduHi_2017-4-28_10-28-45.png)
+
+没毛病。
 
 
 
