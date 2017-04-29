@@ -57,8 +57,8 @@ apt install oracle-java8-installer
 之后是安装tomcat。对应着J8，选tomcat8。先去[tomcat官网](http://tomcat.apache.org/)下载包，然后解压。
 
 ```
-wget http://apache.mirror.rafal.ca/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz
-tar zxvf apache-tomcat-8.5.14.tar.gz
+wget http://apache.mirror.rafal.ca/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.0.43.tar.gz
+tar zxvf apache-tomcat-8.0.43.tar.gz
 ```
 
 接着是上[jenkins官网](jenkins.io)下载jenkins的war包。
