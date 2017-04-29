@@ -57,7 +57,7 @@ apt install oracle-java8-installer
 之后是安装tomcat。对应着J8，选tomcat8。先去[tomcat官网](http://tomcat.apache.org/)下载包，然后解压。
 
 ```
-wget http://apache.mirror.rafal.ca/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.0.43.tar.gz
+wget http://mirrors.hust.edu.cn/apache/tomcat/tomcat-8/v8.0.43/bin/apache-tomcat-8.0.43.tar.gz
 tar zxvf apache-tomcat-8.0.43.tar.gz
 ```
 
@@ -67,7 +67,7 @@ tar zxvf apache-tomcat-8.0.43.tar.gz
 wget http://ftp-chi.osuosl.org/pub/jenkins/war-stable/2.46.1/jenkins.war
 ```
 
-war包就放在tomcat文件夹的webroot下即可。
+war包就放在tomcat文件夹的webapps下即可。
 
 然后启动tomcat，进入tomcat文件夹的bin下，启动：
 
