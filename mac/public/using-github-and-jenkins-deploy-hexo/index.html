@@ -1,0 +1,910 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="jenkins,hexo,blog," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="使用jenkins来部署hexo简直就是小题大做，但是偶尔这样小题大做还真有折腾的乐趣 背景jianyujianyu.com之前是使用typecho做博客的。 原因很简单，wordpress太重，hexo很轻没错，可是这个没有后台管理（听说可以折腾成有后台管理的），每次写完博客都要deploy一下的hexo，我真心要不起。 而现在jianyujianyu.com是hexo了，经过也很简单，就是因为">
+<meta name="keywords" content="jenkins,hexo,blog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件">
+<meta property="og:url" content="http://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/index.html">
+<meta property="og:site_name" content="人工智障">
+<meta property="og:description" content="使用jenkins来部署hexo简直就是小题大做，但是偶尔这样小题大做还真有折腾的乐趣 背景jianyujianyu.com之前是使用typecho做博客的。 原因很简单，wordpress太重，hexo很轻没错，可是这个没有后台管理（听说可以折腾成有后台管理的），每次写完博客都要deploy一下的hexo，我真心要不起。 而现在jianyujianyu.com是hexo了，经过也很简单，就是因为">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-25_19-45-36.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_11-23-43.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_11-28-19.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_11-28-30.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_12-20-38.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.43.29%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.44.11%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.48.36%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.48.56%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.52.30%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_10-29-15.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_10-33-0.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.49.16%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.53.25%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.53.34%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.49.53%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.51.15%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.52.21%20PM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-27%20at%2012.11.57%20AM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-27%20at%2012.12.20%20AM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-27%20at%2012.12.57%20AM.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-28_10-25-53.png">
+<meta property="og:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-28_10-28-45.png">
+<meta property="og:updated_time" content="2017-04-29T02:39:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件">
+<meta name="twitter:description" content="使用jenkins来部署hexo简直就是小题大做，但是偶尔这样小题大做还真有折腾的乐趣 背景jianyujianyu.com之前是使用typecho做博客的。 原因很简单，wordpress太重，hexo很轻没错，可是这个没有后台管理（听说可以折腾成有后台管理的），每次写完博客都要deploy一下的hexo，我真心要不起。 而现在jianyujianyu.com是hexo了，经过也很简单，就是因为">
+<meta name="twitter:image" content="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-25_19-45-36.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/"/>
+
+
+
+
+
+  <title>[小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件 | 人工智障</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">人工智障</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-friend-links">
+          <a href="/links" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            menu.friend-links
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="煎鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yijie.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人工智障">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-27T09:49:38+08:00">
+                2017-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CI/" itemprop="url" rel="index">
+                    <span itemprop="name">CI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/using-github-and-jenkins-deploy-hexo/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>使用jenkins来部署hexo简直就是小题大做，但是偶尔这样小题大做还真有折腾的乐趣</em></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><a href="https://www.jianyujianyu.com">jianyujianyu.com</a>之前是使用typecho做博客的。</p>
+<p>原因很简单，wordpress太重，hexo很轻没错，可是这个没有后台管理（听说可以折腾成有后台管理的），每次写完博客都要deploy一下的hexo，我真心要不起。</p>
+<p>而现在<a href="https://www.jianyujianyu.com">jianyujianyu.com</a>是hexo了，经过也很简单，就是因为CA证书过期了，换证书的时候弄砸了，本着顺便过滤一波辣鸡博客的心思，重新弄，这次选择了hexo，不为什么，人生的选择就是这么奇妙。</p>
+<p>那怎么不自己手写一个？说得好！不过我才不要。</p>
+<p>用hexo不是不行，是要考虑deploy的事，或者，我换台电脑写博客，我没有这个hexo的node环境，我也不想登录服务器用着vim来写，比如我现在就安静在公司电脑上写博客。在这样的情况下，怎么deploy呢？在从前，wordpress和typecho有着后台管理，这个问题根本是不存在的。</p>
+<p>想着想着，一拍脑袋，就直接用jenkins了，然后把代码放在github，包括hexo的整个文件夹。至于为啥用github而不用coding甚至是github pages，never mind。</p>
+<p>设计的deploy过程很简单：</p>
+<ul>
+<li>我先clone了github上的hexo文件夹，添加了md文章，然后push</li>
+<li>github整理好代码就通知jenkins：我这里资源更新了，大爷快来玩啊</li>
+<li>jenkins收到消息，兽性大发地下了github上的代码</li>
+<li>拥有hexo环境的jenkins直接执行hexo g，产生了分泌物，也就是静态文件，在这里就是<a href="https://www.jianyujianyu.com">jianyujianyu.com</a>的html网页内容（hexo/public）</li>
+<li>待定的nginx直接将用户请求拉向<a href="https://www.jianyujianyu.com">jianyujianyu.com</a>的hexo/public文件夹即可</li>
+</ul>
+<p>简单地设计完，便是动手开始。</p>
+<a id="more"></a>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p><em>所有操作都是在Ubuntu的root用户下进行的，其他环境自行处理或转换</em></p>
+<h3 id="Java、Tomcat和Jenkins"><a href="#Java、Tomcat和Jenkins" class="headerlink" title="Java、Tomcat和Jenkins"></a>Java、Tomcat和Jenkins</h3><p>jenkins是java的美好产物，为了后面调试起来简单，使用tomcat容器来装着这产物，而不是直接用apt下载。</p>
+<p>（如果为了快捷，也可以只下载java和jenkins，然后通过<code>java -jar jenkins.war</code>来运行。不推荐。）</p>
+<p>因此我们首先安装J8。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">add-apt-repository ppa:webupd8team/java</div><div class="line">apt update</div><div class="line">apt install oracle-java8-installer</div></pre></td></tr></table></figure>
+<p>之后是安装tomcat。对应着J8，选tomcat8。先去<a href="http://tomcat.apache.org/" target="_blank" rel="external">tomcat官网</a>下载包，然后解压。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget http://apache.mirror.rafal.ca/tomcat/tomcat-8/v8.5.14/bin/apache-tomcat-8.5.14.tar.gz</div><div class="line">tar zxvf apache-tomcat-8.5.14.tar.gz</div></pre></td></tr></table></figure>
+<p>接着是上<a href="jenkins.io">jenkins官网</a>下载jenkins的war包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://ftp-chi.osuosl.org/pub/jenkins/war-stable/2.46.1/jenkins.war</div></pre></td></tr></table></figure>
+<p>war包就放在tomcat文件夹的webroot下即可。</p>
+<p>然后启动tomcat，进入tomcat文件夹的bin下，启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./startup.sh</div></pre></td></tr></table></figure>
+<p>接下来就可以尝试通过网页登录tomcat以及jenkins了。在浏览器中打开<a href="http://服务器的ip:8080，" target="_blank" rel="external">http://服务器的ip:8080，</a></p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-25_19-45-36.png" alt="tomcat主页"></p>
+<p>然后打开<a href="http://服务器的ip:8080/jenkins，根据知识安装jenkins环境，安装推荐环境即可，不需要自己选择，因为推荐环境已经包含了我们需要的插件。***如果要nginx反向代理tomcat，推荐先做完后面nginx的反向代理再安装jenkins***。" target="_blank" rel="external">http://服务器的ip:8080/jenkins，根据知识安装jenkins环境，安装推荐环境即可，不需要自己选择，因为推荐环境已经包含了我们需要的插件。***如果要nginx反向代理tomcat，推荐先做完后面nginx的反向代理再安装jenkins***。</a></p>
+<p>按照提示输入password，然后选择推荐安装：</p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_11-23-43.png" alt=""></p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_11-28-19.png" alt=""></p>
+<p>正在安装，要等一下</p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_11-28-30.png" alt=""></p>
+<p>账号密码以及权限的事自行考虑</p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_12-20-38.png" alt=""></p>
+<h3 id="Nodejs、NPM和hexo"><a href="#Nodejs、NPM和hexo" class="headerlink" title="Nodejs、NPM和hexo"></a>Nodejs、NPM和hexo</h3><p>hexo是nodejs的产物，因此搭建nodejs环境是必须的。而安装nodejs推荐在<a href="https://nodejs.org/en/" target="_blank" rel="external">官网</a>上下载源码编译，不然apt得到的都是旧的，没办法，node这两年发展得太快了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">wget https://nodejs.org/dist/v6.10.2/node-v6.10.2.tar.gz</div><div class="line">tar zxvf node-v6.10.2.tar.gz</div><div class="line">cd node-v6.10.2</div><div class="line">./configure</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>make可自行通过参数-j来加速编译。</p>
+<p>安装好了node，npm也接着来了，如果在安装过程中觉得npm下载太慢可以是用<a href="http://npm.taobao.org/" target="_blank" rel="external">淘宝镜像</a>，使用方法自行查询。</p>
+<p>然后照着<a href="https://hexo.io/docs/" target="_blank" rel="external">hexo官方文档</a>的方法安装hexo已经相关环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">npm install hexo-cli -g</div><div class="line">hexo init hexo</div><div class="line">cd hexo</div><div class="line">npm install</div></pre></td></tr></table></figure>
+<p>hexo的命令很简单，有了hexo的环境之后可以通过命令生成静态文件或者启动临时服务器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo g # generate static file</div><div class="line">hexo s # start a server</div></pre></td></tr></table></figure>
+<p>在生成静态文件后，将nginx配置到hexo/public下面，请求即可到达；在启动hexo临时服务器后，即可访问<a href="http://服务器的ip:4000/jenkins。" target="_blank" rel="external">http://服务器的ip:4000/jenkins。</a></p>
+<p>至此，hexo环境已经是完成了。</p>
+<p>如果说还有什么需要在这一步做的话， 那应该就是将代码push到git上，这个事我就不多说了。</p>
+<h3 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h3><p>安装nginx十分简单，但是在这次的实验中，nginx地位也不算低，80或者443端口要配置到hexo/public下，最好还要给tomcat配置反向代理。在以后的安全和优化方面，nginx需要配置的也不少。</p>
+<p>安装nginx也就一句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apt install nginx</div></pre></td></tr></table></figure>
+<p>然后便是对配置的修改（我直接改default配置文件，别的方法自行实施）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/nginx/sites-available/default</div></pre></td></tr></table></figure>
+<p>在开放80或者443的端口的server里面配置好root，例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root /var/www/hexo/public;</div></pre></td></tr></table></figure>
+<p>推荐给tomcat上个反向代理，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">upstream tomcat  &#123;</div><div class="line">        server  127.0.0.1:8080;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line">        listen 11111;</div><div class="line">        listen [::]:11111;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">                #try_files $uri $uri/ =404;</div><div class="line">                proxy_pass   http://tomcat;</div><div class="line">                proxy_redirect  off;</div><div class="line">                proxy_set_header Host $host:$server_port;</div><div class="line">                proxy_set_header X-Real-IP $remote_addr;</div><div class="line">                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">                proxy_set_header Request-Url $request_uri;</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上需要注意的是proxy_set_header需要配置好，不然后面可能无法跳转到对的路径。</p>
+<h2 id="配置Github和Jenkins"><a href="#配置Github和Jenkins" class="headerlink" title="配置Github和Jenkins"></a>配置Github和Jenkins</h2><h3 id="创建job"><a href="#创建job" class="headerlink" title="创建job"></a>创建job</h3><p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.43.29%20PM.png" alt="创建job"></p>
+<p>点击create new jobs，选择freestyle，填好job名字。</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.44.11%20PM.png" alt="选择freestyle"></p>
+<p>创建了job以后，jenkins紧接着就是让你配置jenkins，如果这次不配置也没什么，因为创建的job已经保存好了。</p>
+<h3 id="配置密钥"><a href="#配置密钥" class="headerlink" title="配置密钥"></a>配置密钥</h3><p>如果我在github上的代码库是私密的而不是公开的，那么jenkins想要拉取到我的代码必须要有相应的私钥。至于哪一台机上的公钥私钥没什么所谓，重要的是github上有一台机的公钥，而jenkins上应该也有这台机的私钥。当然前提是github上的代码库是私密的，公开的无所谓。</p>
+<p>先在Jenkins添加私钥。</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.48.36%20PM.png" alt="创建一个证书"></p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.48.56%20PM.png" alt=""></p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-25%20at%2010.52.30%20PM.png" alt="填入git平台的公钥对应的私钥"></p>
+<p>查出private key往上填就行，为了保密我就不填真实username了。至于怎么生成key，自行查找ssh-keygen命令，或者参考类似<a href="https://help.github.com/articles/connecting-to-github-with-ssh/" target="_blank" rel="external">Github的文档</a>。</p>
+<h3 id="配置WebHook"><a href="#配置WebHook" class="headerlink" title="配置WebHook"></a>配置WebHook</h3><p>配置webhook是在github上完成的。webhook的存在意义就是github上发生了特定事件，然后会告诉请求jenkins，以便让jenkins去拉代码进行下一步操作。</p>
+<p>例如，现在要配置的，就是每次将代码push上去后，就触发jenkins的操作。</p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_10-29-15.png" alt=""></p>
+<p>打码处理。</p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-26_10-33-0.png" alt=""></p>
+<h3 id="配置job"><a href="#配置job" class="headerlink" title="配置job"></a>配置job</h3><p>之前的环境都搭建好了，配置刚才创建的job就是关键的一步了。</p>
+<p>首先是要配置github project</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.49.16%20PM.png" alt=""></p>
+<p>而在源码管理里面，必须要填一个可行的、同时有权限的配置，失败则如下图，必须做到没有错误提醒</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.53.25%20PM.png" alt=""></p>
+<p>browser也顺便一填</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.53.34%20PM.png" alt=""></p>
+<p>而在Build Triggers里面必须要选Github hook trigger，勾选了jenkins才会接受github发来的请求</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.49.53%20PM.png" alt=""></p>
+<p>最后在Build，也就是构建的这部分，也填上，推荐使用shell，毕竟现在玩这些都是linux了</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.51.15%20PM.png" alt=""></p>
+<p>选择shell后，可以在文本框里面填自己部署要用到的命令，如下面的例子，cd、删除、拷贝等命令都可以。</p>
+<p>需要注意的是，某些命令没有，这个可以通过不断的测试来检验。</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-26%20at%2011.52.21%20PM.png" alt=""></p>
+<p>至此已经配置好了jenkins上的job，接下来就是调试了。</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>调试很简单。先把代码clone下来本地，然后稍稍改动一个无关文件，再push，之后便是感受是否这套环境是否能自动化部署。</p>
+<h3 id="Push代码"><a href="#Push代码" class="headerlink" title="Push代码"></a>Push代码</h3><p>各种push方式任君选择</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-27%20at%2012.11.57%20AM.png" alt=""></p>
+<h3 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h3><p>push成功后，github hook会通知所填写的jenkins，如果jenkins没有调起job，则有可能是hook或者配置job里面的Github hook trigger没有填写正确。</p>
+<p>如果是成功调起，在jenkins的hexo的job页面，左下角会看到有类似<code>#1</code>的</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-27%20at%2012.12.20%20AM.png" alt=""></p>
+<p>想要查看错误日志，点击左上角的Github Hook Log或者Console Output，即可根据这些日志对配置进行调整。</p>
+<p><img src="https://oda3wj69k.qnssl.com/Screen%20Shot%202017-04-27%20at%2012.12.57%20AM.png" alt=""></p>
+<p>Output大致都如下：</p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-28_10-25-53.png" alt=""></p>
+<h3 id="访问网站"><a href="#访问网站" class="headerlink" title="访问网站"></a>访问网站</h3><p>不是红灯一般都是成功的，访问网站体验一下，<a href="https://www.jianyujianyu.com/">jianyujianyu.com</a> ：</p>
+<p><img src="https://oda3wj69k.qnssl.com/BaiduHi_2017-4-28_10-28-45.png" alt=""></p>
+<p>没毛病。</p>
+<p>若有错误之处请指出，更多地关注<a href="http://www.jianyujianyu.com">煎鱼</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jenkins/" rel="tag"># jenkins</a>
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+            <a href="/tags/blog/" rel="tag"># blog</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/" rel="prev" title="ubuntu14.04 + cuda8 + caffe + cudnn5.0 (GTX1080 + GTX750Ti)">
+                ubuntu14.04 + cuda8 + caffe + cudnn5.0 (GTX1080 + GTX750Ti) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/yijie.jpg"
+               alt="煎鱼" />
+          <p class="site-author-name" itemprop="name">煎鱼</p>
+           
+              <p class="site-description motion-element" itemprop="description">后台狗煎鱼</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">tags</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/1797816007/profile" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/aimreant" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jianyujianyu" target="_blank" title="Zhihu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Zhihu
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境准备"><span class="nav-number">2.</span> <span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java、Tomcat和Jenkins"><span class="nav-number">2.1.</span> <span class="nav-text">Java、Tomcat和Jenkins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nodejs、NPM和hexo"><span class="nav-number">2.2.</span> <span class="nav-text">Nodejs、NPM和hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx"><span class="nav-number">2.3.</span> <span class="nav-text">Nginx</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Github和Jenkins"><span class="nav-number">3.</span> <span class="nav-text">配置Github和Jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建job"><span class="nav-number">3.1.</span> <span class="nav-text">创建job</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置密钥"><span class="nav-number">3.2.</span> <span class="nav-text">配置密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置WebHook"><span class="nav-number">3.3.</span> <span class="nav-text">配置WebHook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置job"><span class="nav-number">3.4.</span> <span class="nav-text">配置job</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调试"><span class="nav-number">4.</span> <span class="nav-text">调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Push代码"><span class="nav-number">4.1.</span> <span class="nav-text">Push代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看日志"><span class="nav-number">4.2.</span> <span class="nav-text">查看日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问网站"><span class="nav-number">4.3.</span> <span class="nav-text">访问网站</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">煎鱼</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "3a7988cd24da4e4a9bb9c1d354aed4a1",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

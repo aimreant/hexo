@@ -263,6 +263,167 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="煎鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yijie.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人工智障">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/using-github-and-jenkins-deploy-hexo/" itemprop="url">
+                  [小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-27T09:49:38+08:00">
+                2017-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CI/" itemprop="url" rel="index">
+                    <span itemprop="name">CI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><em>使用jenkins来部署hexo简直就是小题大做，但是偶尔这样小题大做还真有折腾的乐趣</em></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><a href="https://www.jianyujianyu.com">jianyujianyu.com</a>之前是使用typecho做博客的。</p>
+<p>原因很简单，wordpress太重，hexo很轻没错，可是这个没有后台管理（听说可以折腾成有后台管理的），每次写完博客都要deploy一下的hexo，我真心要不起。</p>
+<p>而现在<a href="https://www.jianyujianyu.com">jianyujianyu.com</a>是hexo了，经过也很简单，就是因为CA证书过期了，换证书的时候弄砸了，本着顺便过滤一波辣鸡博客的心思，重新弄，这次选择了hexo，不为什么，人生的选择就是这么奇妙。</p>
+<p>那怎么不自己手写一个？说得好！不过我才不要。</p>
+<p>用hexo不是不行，是要考虑deploy的事，或者，我换台电脑写博客，我没有这个hexo的node环境，我也不想登录服务器用着vim来写，比如我现在就安静在公司电脑上写博客。在这样的情况下，怎么deploy呢？在从前，wordpress和typecho有着后台管理，这个问题根本是不存在的。</p>
+<p>想着想着，一拍脑袋，就直接用jenkins了，然后把代码放在github，包括hexo的整个文件夹。至于为啥用github而不用coding甚至是github pages，never mind。</p>
+<p>设计的deploy过程很简单：</p>
+<ul>
+<li>我先clone了github上的hexo文件夹，添加了md文章，然后push</li>
+<li>github整理好代码就通知jenkins：我这里资源更新了，大爷快来玩啊</li>
+<li>jenkins收到消息，兽性大发地下了github上的代码</li>
+<li>拥有hexo环境的jenkins直接执行hexo g，产生了分泌物，也就是静态文件，在这里就是<a href="https://www.jianyujianyu.com">jianyujianyu.com</a>的html网页内容（hexo/public）</li>
+<li>待定的nginx直接将用户请求拉向<a href="https://www.jianyujianyu.com">jianyujianyu.com</a>的hexo/public文件夹即可</li>
+</ul>
+<p>简单地设计完，便是动手开始。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/using-github-and-jenkins-deploy-hexo/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1603,162 +1764,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/10k-parallel-on-raspberry2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="煎鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/yijie.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="人工智障">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/10k-parallel-on-raspberry2/" itemprop="url">
-                  在树莓派2上Nginx并发1W到底有多难
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-13T07:47:00+08:00">
-                2016-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Raspberry/" itemprop="url" rel="index">
-                    <span itemprop="name">Raspberry</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="道听途说后的感想"><a href="#道听途说后的感想" class="headerlink" title="道听途说后的感想"></a>道听途说后的感想</h2><p>总能得知Nginx的最大并发量能去到10W！简直吓到我，也不知道是我弱鸡还是我没弄过，反正10W的并发量我是没有弄过出来。不过嘛，说不定一台好CPU、大内存、高IO、高优化的服务器随便就可以上十万了，怎么说也是XEON的CPU然后来个几百几十G的内存是吧。那么在性能那么低的树莓派上并发量又能去到多少呢？网友总会说用树莓派当服务器还是算了吧，就这烂性能。这我也深有体会，在上面搭建的MC服务器简直没法玩啊！好吧，毕竟只是个值一两百块钱的板子而已：</p>
-<ul>
-<li>CPU：4核，性能大概只相当于196MHZ的i3（网友反映的）</li>
-<li>内存：1G，简直不够用好吧！</li>
-<li>硬盘IO：十几M每秒吧，其实就是SD卡的IO</li>
-</ul>
-<p>你看看这性能：<br>1.根本不能指望SD的IO能干嘛，换句话来说，传统数据库的读写、SWAP的换出换入等和外存有关的都不能实现（这样会拖时间而且换入换出的时候CPU根本承受不了！）<br>2.因为上面的原因，几乎所有的东西都得堆在内存，1G的内存<br>3.CPU很low，超频了也不过是零点几、零点零几的提升，如果还不用多线程榨干它简直大逆不道</p>
-<p>其实看到这配置估计就有很多人会说：欸，你这不是傻嘛，这么点可怜的性能怎么提升也不可能有什么效果的，还不如去用真·服务器去。其实我主要是不太想这个东西积尘了，也想折腾一下这方面的而已。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/10k-parallel-on-raspberry2/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1801,7 +1813,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1812,7 +1824,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -1823,7 +1835,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">tags</span>
               
             </div>
