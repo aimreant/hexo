@@ -41,14 +41,14 @@ ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
 
-![Screen Shot 2017-05-03 at 10.30.57 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 10.30.57 PM.png)
+![Screen Shot 2017-05-03 at 10.30.57 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 10.30.57 PM.png)
 
 
 
 
 配置完后即可通过`ssh localhost`命令无密码登录，需要注意的是要按提示输入yes
 
-![Screen Shot 2017-05-03 at 10.31.13 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 10.31.13 PM.png)
+![Screen Shot 2017-05-03 at 10.31.13 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 10.31.13 PM.png)
 
 
 
@@ -61,7 +61,7 @@ wget http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.8.0/hadoo
 tar zxvf hadoop-2.8.0.tar.gz
 ```
 
-![Screen Shot 2017-05-03 at 10.32.49 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 10.32.49 PM.png)
+![Screen Shot 2017-05-03 at 10.32.49 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 10.32.49 PM.png)
 
 ```
 mv hadoop-2.8.0 hadoop
@@ -153,11 +153,11 @@ vim ./etc/hadoop/hdfs-site.xml
 ./bin/hdfs namenode -format
 ```
 
-![Screen Shot 2017-05-03 at 11.20.51 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.20.51 PM.png)
+![Screen Shot 2017-05-03 at 11.20.51 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.20.51 PM.png)
 
 中间太多了略过直接看末尾：
 
-![Screen Shot 2017-05-03 at 11.21.37 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.21.37 PM.png)
+![Screen Shot 2017-05-03 at 11.21.37 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.21.37 PM.png)
 
 在此看到Exiting status为0，结合大多数程序和系统脚本，结束状态码为0即为正常运行结束。
 
@@ -168,7 +168,7 @@ vim ./etc/hadoop/hdfs-site.xml
 
 运行`./sbin/start-dfs.sh`命令即可启动
 
-![Screen Shot 2017-05-03 at 11.23.40 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.23.40 PM.png)
+![Screen Shot 2017-05-03 at 11.23.40 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.23.40 PM.png)
 
 
 
@@ -184,7 +184,7 @@ WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platfo
 
 而后即可通过 http://机器ip:50070 来访问 NameNode 和 Datanode 信息，还可以在线查看 HDFS 中的文件。
 
-![Screen Shot 2017-05-03 at 10.44.18 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 10.44.18 PM.png)
+![Screen Shot 2017-05-03 at 10.44.18 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 10.44.18 PM.png)
 
 
 在命令界面也可以通过`jps`来查看 NameNode 和 Datanode 信息是否在运行。
@@ -197,12 +197,12 @@ WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platfo
 
 可以通过`./bin/hdfs dfs -help`命令来查看使用方法：
 
-![Screen Shot 2017-05-03 at 11.24.41 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.24.41 PM.png)
+![Screen Shot 2017-05-03 at 11.24.41 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.24.41 PM.png)
 
 
 例如查看hadoop版本的命令：
 
-![Screen Shot 2017-05-03 at 11.19.25 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.19.25 PM.png)
+![Screen Shot 2017-05-03 at 11.19.25 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.19.25 PM.png)
 
 
 
@@ -222,7 +222,7 @@ WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platfo
 ./bin/hdfs dfs -ls input
 ```
 
-![Screen Shot 2017-05-03 at 11.08.16 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.08.16 PM.png)
+![Screen Shot 2017-05-03 at 11.08.16 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.08.16 PM.png)
 
 然后运行例子，解析input里面的配置文件，并将解析结果放入output文件夹：
 
@@ -230,7 +230,7 @@ WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platfo
 ./bin/hadoop jar ./share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar grep /user/hadoop/input/* /user/hadoop/output 'dfs[a-z.]+'
 ```
 
-![Screen Shot 2017-05-03 at 11.09.22 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.09.22 PM.png)
+![Screen Shot 2017-05-03 at 11.09.22 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.09.22 PM.png)
 
 
 把output里面的解析结果通过cat命令输出：
@@ -239,7 +239,7 @@ WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platfo
 ./bin/hdfs dfs -cat /user/hadoop/output/*
 ```
 
-![Screen Shot 2017-05-03 at 11.09.52 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.09.52 PM.png)
+![Screen Shot 2017-05-03 at 11.09.52 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.09.52 PM.png)
 
 
 把output里面的解析结果从hdfs中取出（这个操作是常用的，尽管在伪分布式里面没什么意义，但是在真实环境下特别有用）：
@@ -260,7 +260,7 @@ wordcount是一个hadoop内置的范例程序，用于统计单词数量。
 ./bin/hdfs dfs -rm -r -f /user/hadoop/output /user/hadoop/input
 ```
 
-![Screen Shot 2017-05-03 at 11.15.36 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.15.36 PM.png)
+![Screen Shot 2017-05-03 at 11.15.36 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.15.36 PM.png)
 
 
 然后和实验一一样，创建hadoop的输入文件夹，同时就地取材一个可读文件：
@@ -278,7 +278,7 @@ wordcount是一个hadoop内置的范例程序，用于统计单词数量。
 ./bin/hdfs dfs -cat /user/hadoop/output/*
 ```
 
-![Screen Shot 2017-05-03 at 11.16.23 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.16.23 PM.png)
+![Screen Shot 2017-05-03 at 11.16.23 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.16.23 PM.png)
 
 
 可以看到，屏幕是被刷了好几遍，因为输出太多了，我们可以统计一下输出了有多少行：
@@ -287,7 +287,7 @@ wordcount是一个hadoop内置的范例程序，用于统计单词数量。
 ./bin/hdfs dfs -cat /user/hadoop/output/* | wc -l
 ```
 
-![Screen Shot 2017-05-03 at 11.17.34 P](http://source.jianyujianyu.com/2017-05-04-Screen Shot 2017-05-03 at 11.17.34 PM.png)
+![Screen Shot 2017-05-03 at 11.17.34 P](https://oda3wj69k.qnssl.com/2017-05-04-Screen Shot 2017-05-03 at 11.17.34 PM.png)
 
 噢，原来有2000多行的输出呢！
 
