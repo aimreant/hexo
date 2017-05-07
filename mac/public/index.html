@@ -93,7 +93,7 @@
 <meta name="description" content="后台狗煎鱼">
 <meta property="og:type" content="website">
 <meta property="og:title" content="人工智障">
-<meta property="og:url" content="http://www.jianyujianyu.com/index.html">
+<meta property="og:url" content="https://www.jianyujianyu.com/index.html">
 <meta property="og:site_name" content="人工智障">
 <meta property="og:description" content="后台狗煎鱼">
 <meta name="twitter:card" content="summary">
@@ -124,9 +124,24 @@
   };
 </script>
 
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 
 
-  <link rel="canonical" href="http://www.jianyujianyu.com/"/>
+
+  <link rel="canonical" href="https://www.jianyujianyu.com/"/>
 
 
 
@@ -205,12 +220,32 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
           </a>
         </li>
       
@@ -263,7 +298,154 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/ubuntu16.04-hadoop2.8.0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="煎鱼">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/yijie.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="人工智障">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/ubuntu16.04-hadoop2.8.0/" itemprop="url">
+                  在 Ubuntu16.04 上搭建 Hadoop-2.8.0 伪分布式环境
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-04T22:53:39+08:00">
+                2017-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">distributed</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><strong><em>学校有几门课程的作业需要我们来写个教程，好吧。</em></strong></p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h3><p>由于该系统是英文系统，有可能对中文字符支持不友好，因此要安装中文的UTF-8字符集。同时因为Hadoop是Java的杰出产物因此需要安装Java，为了方便，在这里选用OpenJdk，版本Java8。而需要用到的vim、ssh等命令已内置在Ubuntu16.04中，因此无需重复安装。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/ubuntu16.04-hadoop2.8.0/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -424,7 +606,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -573,7 +755,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/chinese-unicode-in-python2.x/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/chinese-unicode-in-python2.x/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -719,7 +901,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/thinking-about-mybatis-from-jdbc/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/thinking-about-mybatis-from-jdbc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -865,7 +1047,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/http-server-implement-using-niosocket/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/http-server-implement-using-niosocket/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -1016,7 +1198,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/compile-tensorflow-on-raspberry2or3/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/compile-tensorflow-on-raspberry2or3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -1169,7 +1351,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/thinking-about-cnn/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/thinking-about-cnn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -1316,7 +1498,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/writing-web-using-go/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/writing-web-using-go/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -1475,7 +1657,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/talking-about-nlp-problems/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/talking-about-nlp-problems/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -1615,155 +1797,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/learing-svm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="煎鱼">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/yijie.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="人工智障">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/learing-svm/" itemprop="url">
-                  如何理解SVM | 支持向量机之我见
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-05-14T09:00:14+08:00">
-                2016-05-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/科学计算/" itemprop="url" rel="index">
-                    <span itemprop="name">科学计算</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>囫囵吞枣看完SVM，个人感觉如果不好好理解一些概念，或说如果知其然而不知其所以然的话，不如不看。因此我想随便写一写，把整个思路简单地整理一遍。：）</strong></p>
-<h2 id="SVM与神经网络"><a href="#SVM与神经网络" class="headerlink" title="SVM与神经网络"></a>SVM与神经网络</h2><p>支持向量机并不是神经网络，这两个完全是两条不一样的路吧。不过详细来说，线性SVM的计算部分就像一个单层的神经网络一样，而非线性SVM就完全和神经网络不一样了（是的没错，现实生活中大多问题是非线性的），详情可以参考<a href="https://www.zhihu.com/question/22290096">知乎答案</a>。</p>
-<p>这两个冤家一直不争上下，最近基于神经网络的深度学习因为AlphaGo等热门时事，促使神经网络的热度达到了空前最高。毕竟，深度学习那样的多层隐含层的结构，犹如一个黑盒子，一个学习能力极强的潘多拉盒子。有人或许就觉得这就是我们真正的神经网络，我们不知道它那数以百千计的神经元干了什么，也不理解为何如此的结构能诞生如此美好的数据 —— 犹如复杂性科学般，处于高层的我们并不能知道底层的”愚群“为何能涌现。两者一比起来，SVM似乎也没有深度学习等那么令人狂热，连Hinton都开玩笑说SVM不过是浅度学习（来自深度学习的调侃）。</p>
-<p>不然，个人觉得相对于热衷于隐含层的神经网络，具有深厚的数学理论的SVM更值得让我们研究。SVM背后伟大的数学理论基础可以说是现今人类的伟大数学成就，因此SVM的解释性也非神经网络可比，可以说，它的数学理论让它充满了理性，这样的理性是一个理工科生向往的。就如，你渴望知道食物的来源以确定食物是否有毒，如果有毒是什么毒，这样的毒会在人体内发生了什么反应以致于让你不适 —— 我的理性驱使我这么想，一个来路不明的食物是不能让我轻易接受的。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/learing-svm/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1813,7 +1846,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1824,7 +1857,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -1835,7 +1868,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">tags</span>
               
             </div>

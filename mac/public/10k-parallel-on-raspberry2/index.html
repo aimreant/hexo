@@ -94,7 +94,7 @@
 <meta name="keywords" content="后台,Raspberry,闲聊">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在树莓派2上Nginx并发1W到底有多难">
-<meta property="og:url" content="http://www.jianyujianyu.com/10k-parallel-on-raspberry2/index.html">
+<meta property="og:url" content="https://www.jianyujianyu.com/10k-parallel-on-raspberry2/index.html">
 <meta property="og:site_name" content="人工智障">
 <meta property="og:description" content="道听途说后的感想总能得知Nginx的最大并发量能去到10W！简直吓到我，也不知道是我弱鸡还是我没弄过，反正10W的并发量我是没有弄过出来。不过嘛，说不定一台好CPU、大内存、高IO、高优化的服务器随便就可以上十万了，怎么说也是XEON的CPU然后来个几百几十G的内存是吧。那么在性能那么低的树莓派上并发量又能去到多少呢？网友总会说用树莓派当服务器还是算了吧，就这烂性能。这我也深有体会，在上面搭建的M">
 <meta property="og:image" content="http://source.jianyujianyu.com/2016-05-13-14631237005719.jpg">
@@ -133,9 +133,24 @@
   };
 </script>
 
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 
 
-  <link rel="canonical" href="http://www.jianyujianyu.com/10k-parallel-on-raspberry2/"/>
+
+  <link rel="canonical" href="https://www.jianyujianyu.com/10k-parallel-on-raspberry2/"/>
 
 
 
@@ -212,12 +227,32 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
           </a>
         </li>
       
@@ -270,7 +305,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/10k-parallel-on-raspberry2/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/10k-parallel-on-raspberry2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -542,7 +577,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -553,7 +588,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -564,7 +599,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">tags</span>
               
             </div>

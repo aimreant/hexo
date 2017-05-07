@@ -210,7 +210,7 @@ pip install pygraphviz
 然后执行 `source /etc/profile`
 
 
-
+若有错误之处请指出，更多地关注[煎鱼](http://www.jianyujianyu.com)。
 
 
 

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/</loc>
+    <lastmod>2017-05-07T03:06:47.000Z</lastmod>
+    <data>
+        <display>
+        <title>ubuntu14.04 + cuda8 + caffe + cudnn5.0 (GTX1080 + GTX750Ti)</title>
+        <pubTime>2017-03-09T19:15:59.000Z</pubTime>
+        
+        <tag>caffe</tag>
+         
+         
+           
+             
+              <breadCrumb title="caffe" url="https://www.jianyujianyu.com/categories/caffe/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/ubuntu16.04-hadoop2.8.0/</loc>
+    <lastmod>2017-05-04T15:16:16.000Z</lastmod>
+    <data>
+        <display>
+        <title>在 Ubuntu16.04 上搭建 Hadoop-2.8.0 伪分布式环境</title>
+        <pubTime>2017-05-04T14:53:39.000Z</pubTime>
+        
+        <tag>hadoop</tag>
+         
+        <tag>distributed</tag>
+         
+         
+           
+             
+              <breadCrumb title="distributed" url="https://www.jianyujianyu.com/categories/distributed/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/</loc>
+    <lastmod>2017-04-29T14:08:16.000Z</lastmod>
+    <data>
+        <display>
+        <title>[小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件</title>
+        <pubTime>2017-04-27T01:49:38.000Z</pubTime>
+        
+        <tag>jenkins</tag>
+         
+        <tag>hexo</tag>
+         
+        <tag>blog</tag>
+         
+         
+           
+             
+              <breadCrumb title="CI" url="https://www.jianyujianyu.com/categories/CI/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/writing-web-using-go/</loc>
+    <lastmod>2017-04-23T13:43:44.000Z</lastmod>
+    <data>
+        <display>
+        <title>用Go写一个简单Web应用</title>
+        <pubTime>2016-08-05T19:15:59.000Z</pubTime>
+        
+        <tag>go</tag>
+         
+        <tag>web</tag>
+         
+         
+           
+             
+              <breadCrumb title="Golang" url="https://www.jianyujianyu.com/categories/Golang/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/thinking-about-mybatis-from-jdbc/</loc>
+    <lastmod>2017-04-23T13:43:39.000Z</lastmod>
+    <data>
+        <display>
+        <title>从JDBC的不足思考Mybatis的构建</title>
+        <pubTime>2017-03-03T00:13:37.000Z</pubTime>
+        
+        <tag>jdbc</tag>
+         
+        <tag>mybatis</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="https://www.jianyujianyu.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/thinking-about-cnn/</loc>
+    <lastmod>2017-04-23T13:43:08.000Z</lastmod>
+    <data>
+        <display>
+        <title>思考卷积神经网络（CNN）中各种意义</title>
+        <pubTime>2016-09-02T06:00:01.000Z</pubTime>
+        
+        <tag>CNN</tag>
+         
+        <tag>卷积神经网络</tag>
+         
+         
+           
+             
+              <breadCrumb title="图像处理" url="https://www.jianyujianyu.com/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/talking-about-nlp-problems/</loc>
+    <lastmod>2017-04-23T13:43:00.000Z</lastmod>
+    <data>
+        <display>
+        <title>谈谈NLP中的终极问题</title>
+        <pubTime>2016-06-01T07:55:04.000Z</pubTime>
+        
+        <tag>NLP</tag>
+         
+        <tag>AI</tag>
+         
+         
+           
+             
+              <breadCrumb title="人工智能" url="https://www.jianyujianyu.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/learing-svm/</loc>
+    <lastmod>2017-04-23T13:42:49.000Z</lastmod>
+    <data>
+        <display>
+        <title>如何理解SVM | 支持向量机之我见</title>
+        <pubTime>2016-05-14T01:00:14.000Z</pubTime>
+        
+        <tag>机器学习</tag>
+         
+         
+           
+             
+              <breadCrumb title="科学计算" url="https://www.jianyujianyu.com/categories/%E7%A7%91%E5%AD%A6%E8%AE%A1%E7%AE%97/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/http-server-implement-using-niosocket/</loc>
+    <lastmod>2017-04-23T13:42:42.000Z</lastmod>
+    <data>
+        <display>
+        <title>使用NioSocket手动实现HTTP服务器</title>
+        <pubTime>2017-01-14T11:37:00.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+        <tag>niosocket</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="https://www.jianyujianyu.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/compile-tensorflow-on-raspberry2or3/</loc>
+    <lastmod>2017-04-23T13:42:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>在树莓派2或3中编译谷歌深度学习框架TensorFlow</title>
+        <pubTime>2016-10-14T21:59:00.000Z</pubTime>
+        
+        <tag>RPi</tag>
+         
+        <tag>TF</tag>
+         
+         
+           
+             
+              <breadCrumb title="人工智能" url="https://www.jianyujianyu.com/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/chinese-unicode-in-python2.x/</loc>
+    <lastmod>2017-04-23T13:42:15.000Z</lastmod>
+    <data>
+        <display>
+        <title>Python 2.x 的中文编码问题</title>
+        <pubTime>2017-03-05T18:21:00.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>unicode</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="https://www.jianyujianyu.com/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.jianyujianyu.com/10k-parallel-on-raspberry2/</loc>
+    <lastmod>2017-04-23T13:42:06.000Z</lastmod>
+    <data>
+        <display>
+        <title>在树莓派2上Nginx并发1W到底有多难</title>
+        <pubTime>2016-05-12T23:47:00.000Z</pubTime>
+        
+        <tag>后台</tag>
+         
+        <tag>Raspberry</tag>
+         
+        <tag>闲聊</tag>
+         
+         
+           
+             
+              <breadCrumb title="Raspberry" url="https://www.jianyujianyu.com/categories/Raspberry/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+</urlset>

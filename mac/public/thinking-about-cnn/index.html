@@ -94,7 +94,7 @@
 <meta name="keywords" content="CNN,卷积神经网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="思考卷积神经网络（CNN）中各种意义">
-<meta property="og:url" content="http://www.jianyujianyu.com/thinking-about-cnn/index.html">
+<meta property="og:url" content="https://www.jianyujianyu.com/thinking-about-cnn/index.html">
 <meta property="og:site_name" content="人工智障">
 <meta property="og:description" content="只是知道CNN是不够，我们需要对其进行解剖，继而分析不同部件存在的意义 CNN的目的简单来说，CNN的目的是以一定的模型对事物进行特征提取，而后根据特征对该事物进行分类、识别、预测或决策等。在这个过程里，最重要的步骤在于特征提取，即如何提取到能最大程度区分事物的特征。如果提取的特征无法将不同的事物进行划分，那么该特征提取步骤将毫无意义。而实现这个伟大的模型的，是对CNN进行迭代训练。">
 <meta property="og:image" content="http://source.jianyujianyu.com/2016-09-02-14728207615074.jpg">
@@ -134,9 +134,24 @@
   };
 </script>
 
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 
 
-  <link rel="canonical" href="http://www.jianyujianyu.com/thinking-about-cnn/"/>
+
+  <link rel="canonical" href="https://www.jianyujianyu.com/thinking-about-cnn/"/>
 
 
 
@@ -213,12 +228,32 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
           </a>
         </li>
       
@@ -271,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/thinking-about-cnn/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/thinking-about-cnn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -532,7 +567,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -543,7 +578,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -554,7 +589,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">tags</span>
               
             </div>

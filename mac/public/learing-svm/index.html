@@ -94,7 +94,7 @@
 <meta name="keywords" content="机器学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何理解SVM | 支持向量机之我见">
-<meta property="og:url" content="http://www.jianyujianyu.com/learing-svm/index.html">
+<meta property="og:url" content="https://www.jianyujianyu.com/learing-svm/index.html">
 <meta property="og:site_name" content="人工智障">
 <meta property="og:description" content="囫囵吞枣看完SVM，个人感觉如果不好好理解一些概念，或说如果知其然而不知其所以然的话，不如不看。因此我想随便写一写，把整个思路简单地整理一遍。：） SVM与神经网络支持向量机并不是神经网络，这两个完全是两条不一样的路吧。不过详细来说，线性SVM的计算部分就像一个单层的神经网络一样，而非线性SVM就完全和神经网络不一样了（是的没错，现实生活中大多问题是非线性的），详情可以参考知乎答案。 这两个冤家一">
 <meta property="og:image" content="http://source.jianyujianyu.com/2016-05-14-14632059577714.jpg">
@@ -143,9 +143,24 @@
   };
 </script>
 
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 
 
-  <link rel="canonical" href="http://www.jianyujianyu.com/learing-svm/"/>
+
+  <link rel="canonical" href="https://www.jianyujianyu.com/learing-svm/"/>
 
 
 
@@ -222,12 +237,32 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
           </a>
         </li>
       
@@ -280,7 +315,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.jianyujianyu.com/learing-svm/">
+    <link itemprop="mainEntityOfPage" href="https://www.jianyujianyu.com/learing-svm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="煎鱼">
@@ -557,7 +592,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -568,7 +603,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -579,7 +614,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">tags</span>
               
             </div>
