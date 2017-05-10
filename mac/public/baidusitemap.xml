@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>https://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/</loc>
+    <lastmod>2017-05-10T05:37:39.000Z</lastmod>
+    <data>
+        <display>
+        <title>[小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件</title>
+        <pubTime>2017-04-27T01:49:38.000Z</pubTime>
+        
+        <tag>jenkins</tag>
+         
+        <tag>hexo</tag>
+         
+        <tag>blog</tag>
+         
+         
+           
+             
+              <breadCrumb title="CI" url="https://www.jianyujianyu.com/categories/CI/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
     <loc>https://www.jianyujianyu.com/ubuntu14.04-cuda8-caffe-cudnn5.0-GTX1080-GTX750Ti/</loc>
     <lastmod>2017-05-07T03:06:47.000Z</lastmod>
     <data>
@@ -39,30 +64,6 @@
            
              
               <breadCrumb title="distributed" url="https://www.jianyujianyu.com/categories/distributed/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.jianyujianyu.com/using-github-and-jenkins-deploy-hexo/</loc>
-    <lastmod>2017-04-29T14:08:16.000Z</lastmod>
-    <data>
-        <display>
-        <title>[小题大做] Github + Jenkins 实现自动化部署 hexo 博客静态文件</title>
-        <pubTime>2017-04-27T01:49:38.000Z</pubTime>
-        
-        <tag>jenkins</tag>
-         
-        <tag>hexo</tag>
-         
-        <tag>blog</tag>
-         
-         
-           
-             
-              <breadCrumb title="CI" url="https://www.jianyujianyu.com/categories/CI/"/>
           
         </display>
     </data>
@@ -267,5 +268,4 @@
     </data>
     </url>
 
-    
 </urlset>

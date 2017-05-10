@@ -61,7 +61,7 @@ wget http://mirrors.hust.edu.cn/apache/tomcat/tomcat-8/v8.0.43/bin/apache-tomcat
 tar zxvf apache-tomcat-8.0.43.tar.gz
 ```
 
-接着是上[jenkins官网](jenkins.io)下载jenkins的war包。
+接着是上[jenkins官网](https://jenkins.io)下载jenkins的war包。
 
 ```
 wget http://ftp-chi.osuosl.org/pub/jenkins/war-stable/2.46.1/jenkins.war
@@ -75,11 +75,11 @@ war包就放在tomcat文件夹的webapps下即可。
 ./startup.sh
 ```
 
-接下来就可以尝试通过网页登录tomcat以及jenkins了。在浏览器中打开http://服务器的ip:8080，
+接下来就可以尝试通过网页登录tomcat以及jenkins了。在浏览器中打开[http://服务器的ip:8080](#)，
 
 ![tomcat主页](https://oda3wj69k.qnssl.com/BaiduHi_2017-4-25_19-45-36.png)
 
-然后打开http://服务器的ip:8080/jenkins，根据知识安装jenkins环境，安装推荐环境即可，不需要自己选择，因为推荐环境已经包含了我们需要的插件。***如果要nginx反向代理tomcat，推荐先做完后面nginx的反向代理再安装jenkins***。
+然后打开[http://服务器的ip:8080/jenkins](#)，根据知识安装jenkins环境，安装推荐环境即可，不需要自己选择，因为推荐环境已经包含了我们需要的插件。***如果要nginx反向代理tomcat，推荐先做完后面nginx的反向代理再安装jenkins***。
 
 按照提示输入password，然后选择推荐安装：
 
