@@ -1,0 +1,511 @@
+<html>
+
+<head></head>
+
+<body>
+    <table border="0" cellspacing="1" cellpadding="4" bgcolor="#666666" 
+        style="width: 1000px;left: 50%;position: relative;margin-left: -500px;top:14%;margin-bottom:100px;"
+    >
+        <tbody>
+            <tr style="height:70px;">
+                <td width="69" bgcolor="#cccccc"><strong>字符</strong></td>
+                <td width="163" bgcolor="#cccccc"><strong>说明</strong></td>
+                <td width="69" bgcolor="#cccccc"><strong>Basic RegEx</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>Extended RegEx</strong></td>
+                <td width="69" bgcolor="#cccccc"><strong>python RegEx</strong></td>
+                <td width="92" bgcolor="#cccccc"><strong>Perl regEx</strong></td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">转义</td>
+                <td width="163" bgcolor="#ffffff">&nbsp;</td>
+                <td width="69" bgcolor="#ffffff">\</td>
+                <td width="75" bgcolor="#ffffff">\</td>
+                <td width="69" bgcolor="#ffffff">\</td>
+                <td width="92" bgcolor="#ffffff">\</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">^</td>
+                <td width="163" bgcolor="#ffffff">匹配行首，例如'^dog'匹配以字符串dog开头的行（注意：awk 指令中，'^'则是匹配字符串的开始）</td>
+                <td width="69" bgcolor="#ffffff">^</td>
+                <td width="75" bgcolor="#ffffff">^</td>
+                <td width="69" bgcolor="#ffffff">^</td>
+                <td width="92" bgcolor="#ffffff">^</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">$</td>
+                <td width="163" bgcolor="#ffffff">匹配行尾，例如：'^、dog$'匹配以字符串 dog 为结尾的行（注意：awk 指令中，'$'则是匹配字符串的结尾）</td>
+                <td width="69" bgcolor="#ffffff">$</td>
+                <td width="75" bgcolor="#ffffff">$</td>
+                <td width="69" bgcolor="#ffffff">$</td>
+                <td width="92" bgcolor="#ffffff">$</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>^$</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">
+                    <p>匹配空行</p>
+                </td>
+                <td width="69" bgcolor="#ffffff">^$</td>
+                <td width="75" bgcolor="#ffffff">^$</td>
+                <td width="69" bgcolor="#ffffff">^$</td>
+                <td width="92" bgcolor="#ffffff">^$</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">^string$</td>
+                <td width="163" bgcolor="#ffffff">匹配行，例如：'^dog$'匹配只含一个字符串 dog 的行</td>
+                <td width="69" bgcolor="#ffffff">^string$</td>
+                <td width="75" bgcolor="#ffffff">^string$</td>
+                <td width="69" bgcolor="#ffffff">^string$</td>
+                <td width="92" bgcolor="#ffffff">^string$</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\&lt;</td>
+                <td width="163" bgcolor="#ffffff">匹配单词，例如：'\&lt;frog' （等价于'\bfrog'），匹配以 frog 开头的单词</td>
+                <td width="69" bgcolor="#ffffff">\&lt;</td>
+                <td width="75" bgcolor="#ffffff">\&lt;</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="92" bgcolor="#cccccc"><strong>不支持</strong>（但可以使用\b来匹配单词，例如：'\bfrog'）</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\&gt;</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配单词，例如：'frog\&gt;'（等价于'frog\b '），匹配以 frog 结尾的单词</td>
+                <td width="69" bgcolor="#ffffff">\&gt;</td>
+                <td width="75" bgcolor="#ffffff">\&gt;</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="92" bgcolor="#cccccc"><strong>不支持</strong>（但可以使用\b来匹配单词，例如：'frog\b'）</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\&lt;x\&gt;</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配一个单词或者一个特定字符，例如：'\&lt;frog\&gt;'（等价于'\bfrog\b'）、'\&lt;G\&gt;'</td>
+                <td width="69" bgcolor="#ffffff">\&lt;x\&gt;</td>
+                <td width="75" bgcolor="#ffffff">\&lt;x\&gt;</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="92" bgcolor="#cccccc"><strong>不支持</strong>（但可以使用\b来匹配单词，例如：'\bfrog\b'</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>()</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配表达式，例如：不支持'（frog）'</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（但可以使用\(\)，如：\(dog\)</td>
+                <td width="75" bgcolor="#ffffff">()</td>
+                <td width="69" bgcolor="#ffffff">()</td>
+                <td width="92" bgcolor="#ffffff">()</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\(\)</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配表达式，例如：不支持'（frog）'</td>
+                <td width="69" bgcolor="#ffffff">\(\)</td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong>（同())</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同())</td>
+                <td width="92" bgcolor="#cccccc"><strong>不支持</strong>（同())</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>？</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配前面的子表达式 0 次或 1 次（等价于{0,1}），例如：where(is)?能匹配"where" 以及"whereis"</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同\?)</td>
+                <td width="75" bgcolor="#ffffff">？</td>
+                <td width="69" bgcolor="#ffffff">？</td>
+                <td width="92" bgcolor="#ffffff">？</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\?</td>
+                <td width="163" bgcolor="#ffffff">匹配前面的子表达式 0 次或 1 次（等价于'\{0,1\}'），例如：'where\(is\)\? '能匹配 "where"以及"whereis"</td>
+                <td width="69" bgcolor="#ffffff">\?</td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong>（同?)</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同?)</td>
+                <td width="92" bgcolor="#cccccc"><strong>不支持</strong>（同?)</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">?</td>
+                <td width="163" bgcolor="#ffffff">当该字符紧跟在任何一个其他限制符（*, +, ?, {n},{n,}, {n,m}） 后面时，匹配模式是非贪婪的。非贪婪模式尽可能少的匹配所搜索的字符串，而默认的贪婪模式则尽可能多的匹配所搜索的字符串。例如，对于字符串
+                    "oooo"，'o+?' 将匹配单个"o"，而 'o+' 将匹配所有 'o'</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="92" bgcolor="#cccccc"><strong>不支持</strong></td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">.</td>
+                <td width="163" bgcolor="#ffffff">匹配除换行符（'\n'）之外的任意单个字符（注意：awk 指令中的句点能匹配换行符）</td>
+                <td width="69" bgcolor="#ffffff">.</td>
+                <td width="75" bgcolor="#ffffff">.（如果要匹配包括“\n”在内的任何一个字符，请使用：'(^$)|（.）</td>
+                <td width="69" bgcolor="#ffffff">.</td>
+                <td width="92" bgcolor="#ffffff">.（如果要匹配包括“\n”在内的任何一个字符，请使用：' [.\n] '</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">*</td>
+                <td width="163" bgcolor="#ffffff">匹配前面的子表达式 0 次或多次（等价于{0, }），例如：zo* 能匹配 "z"以及 "zoo"</td>
+                <td width="69" bgcolor="#ffffff">*</td>
+                <td width="75" bgcolor="#ffffff">*</td>
+                <td width="69" bgcolor="#ffffff">*</td>
+                <td width="92" bgcolor="#ffffff">*</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\+</td>
+                <td width="163" bgcolor="#ffffff">匹配前面的子表达式 1 次或多次（等价于'\{1, \}'），例如：'where\(is\)\+ '能匹配 "whereis"以及"whereisis"</td>
+                <td width="69" bgcolor="#ffffff">\+</td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong>（同+)</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同+)</td>
+                <td width="92" bgcolor="#cccccc"><strong>不支持</strong>（同+)</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">+</td>
+                <td width="163" bgcolor="#ffffff">匹配前面的子表达式 1 次或多次（等价于{1, }），例如：zo+能匹配 "zo"以及 "zoo"，但不能匹配 "z"</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同\+)</td>
+                <td width="75" bgcolor="#ffffff">+</td>
+                <td width="69" bgcolor="#ffffff">+</td>
+                <td width="92" bgcolor="#ffffff">+</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>{n}</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">n 必须是一个 0 或者正整数，匹配子表达式 n 次，例如：zo{2}能匹配</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同\{n\})</td>
+                <td width="75" bgcolor="#ffffff">{n}</td>
+                <td width="69" bgcolor="#ffffff">{n}</td>
+                <td width="92" bgcolor="#ffffff">{n}</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">{n,}</td>
+                <td width="163" bgcolor="#ffffff">"zooz"，但不能匹配 "Bob"n 必须是一个 0 或者正整数，匹配子表达式大于等于 n次，例如：go{2,}</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同\{n,\})</td>
+                <td width="75" bgcolor="#ffffff">{n,}</td>
+                <td width="69" bgcolor="#ffffff">{n,}</td>
+                <td width="92" bgcolor="#ffffff">{n,}</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">{n,m}</td>
+                <td width="163" bgcolor="#ffffff">能匹配 "good"，但不能匹配 godm 和 n 均为非负整数，其中 n &lt;= m，最少匹配 n 次且最多匹配 m 次 ，例如：o{1,3}将配"fooooood" 中的前三个 o（请注意在逗号和两个数之间不能有空格）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同\{n,m\})</td>
+                <td width="75" bgcolor="#ffffff">{n,m}</td>
+                <td width="69" bgcolor="#ffffff">{n,m}</td>
+                <td width="92" bgcolor="#ffffff">{n,m}</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>x|y</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配 x 或 y，例如： 不支持'z|（food）' 能匹配 "z" 或"food"；'（z|f）ood' 则匹配"zood" 或 "food"</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong>（同x\|y)</td>
+                <td width="75" bgcolor="#ffffff">x|y</td>
+                <td width="69" bgcolor="#ffffff">x|y</td>
+                <td width="92" bgcolor="#ffffff">x|y</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>[0-9]</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配从 0 到 9 中的任意一个数字字符（注意：要写成递增）</td>
+                <td width="69" bgcolor="#ffffff">[0-9]</td>
+                <td width="75" bgcolor="#ffffff">[0-9]</td>
+                <td width="69" bgcolor="#ffffff">[0-9]</td>
+                <td width="92" bgcolor="#ffffff">[0-9]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>[xyz]</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">字符集合，匹配所包含的任意一个字符，例如：'[abc]'可以匹配"lay" 中的 'a'（注意：如果元字符，例如：. *等，它们被放在[ ]中，那么它们将变成一个普通字符）</td>
+                <td width="69" bgcolor="#ffffff">[xyz]</td>
+                <td width="75" bgcolor="#ffffff">[xyz]</td>
+                <td width="69" bgcolor="#ffffff">[xyz]</td>
+                <td width="92" bgcolor="#ffffff">[xyz]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>[^xyz]</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">负值字符集合，匹配未包含的任意一个字符（注意：不包括换行符），例如：'[^abc]' 可以匹配 "Lay" 中的'L'（注意：[^xyz]在awk 指令中则是匹配未包含的任意一个字符+换行符）</td>
+                <td width="69" bgcolor="#ffffff">[^xyz]</td>
+                <td width="75" bgcolor="#ffffff">[^xyz]</td>
+                <td width="69" bgcolor="#ffffff">[^xyz]</td>
+                <td width="92" bgcolor="#ffffff">[^xyz]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[A-Za-z]</td>
+                <td width="163" bgcolor="#ffffff">匹配大写字母或者小写字母中的任意一个字符（注意：要写成递增）</td>
+                <td width="69" bgcolor="#ffffff">[A-Za-z]</td>
+                <td width="75" bgcolor="#ffffff">[A-Za-z]</td>
+                <td width="69" bgcolor="#ffffff">[A-Za-z]</td>
+                <td width="92" bgcolor="#ffffff">[A-Za-z]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[^A-Za-z]</td>
+                <td width="163" bgcolor="#ffffff">匹配除了大写与小写字母之外的任意一个字符（注意：写成递增）</td>
+                <td width="69" bgcolor="#ffffff">[^A-Za-z]</td>
+                <td width="75" bgcolor="#ffffff">[^A-Za-z]</td>
+                <td width="69" bgcolor="#ffffff">[^A-Za-z]</td>
+                <td width="92" bgcolor="#ffffff">[^A-Za-z]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\d</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配从 0 到 9 中的任意一个数字字符（等价于 [0-9]）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\d</td>
+                <td width="92" bgcolor="#ffffff">\d</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\D</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配非数字字符（等价于 [^0-9]）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\D</td>
+                <td width="92" bgcolor="#ffffff">\D</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\S</td>
+                <td width="163" bgcolor="#ffffff">匹配任何非空白字符（等价于[^\f\n\r\t\v]）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\S</td>
+                <td width="92" bgcolor="#ffffff">\S</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\s</td>
+                <td width="163" bgcolor="#ffffff">匹配任何空白字符，包括空格、制表符、换页符等等（等价于[ \f\n\r\t\v]）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\s</td>
+                <td width="92" bgcolor="#ffffff">\s</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\W</td>
+                <td width="163" bgcolor="#ffffff">
+                    <p>匹配任何非单词字符 (等价于[^A-Za-z0-9_])</p>
+                </td>
+                <td width="69" bgcolor="#ffffff">\W</td>
+                <td width="75" bgcolor="#ffffff">\W</td>
+                <td width="69" bgcolor="#ffffff">\W</td>
+                <td width="92" bgcolor="#ffffff">\W</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\w</td>
+                <td width="163" bgcolor="#ffffff">匹配包括下划线的任何单词字符（等价于[A-Za-z0-9_]）</td>
+                <td width="69" bgcolor="#ffffff">\w</td>
+                <td width="75" bgcolor="#ffffff">\w</td>
+                <td width="69" bgcolor="#ffffff">\w</td>
+                <td width="92" bgcolor="#ffffff">\w</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\B</td>
+                <td width="163" bgcolor="#ffffff">匹配非单词边界，例如：'er\B' 能匹配 "verb" 中的'er'，但不能匹配"never" 中的'er'</td>
+                <td width="69" bgcolor="#ffffff">\B</td>
+                <td width="75" bgcolor="#ffffff">\B</td>
+                <td width="69" bgcolor="#ffffff">\B</td>
+                <td width="92" bgcolor="#ffffff">\B</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\b</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配一个单词边界，也就是指单词和空格间的位置，例如： 'er\b' 可以匹配"never" 中的 'er'，但不能匹配 "verb" 中的'er'</td>
+                <td width="69" bgcolor="#ffffff">\b</td>
+                <td width="75" bgcolor="#ffffff">\b</td>
+                <td width="69" bgcolor="#ffffff">\b</td>
+                <td width="92" bgcolor="#ffffff">\b</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\t</td>
+                <td width="163" bgcolor="#ffffff">匹配一个横向制表符（等价于 \x09和 \cI）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\t</td>
+                <td width="92" bgcolor="#ffffff">\t</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\v</td>
+                <td width="163" bgcolor="#ffffff">匹配一个垂直制表符（等价于 \x0b和 \cK）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\v</td>
+                <td width="92" bgcolor="#ffffff">\v</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\n</td>
+                <td width="163" bgcolor="#ffffff">匹配一个换行符（等价于 \x0a 和\cJ）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\n</td>
+                <td width="92" bgcolor="#ffffff">\n</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\f</td>
+                <td width="163" bgcolor="#ffffff">匹配一个换页符（等价于\x0c 和\cL）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\f</td>
+                <td width="92" bgcolor="#ffffff">\f</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\r</td>
+                <td width="163" bgcolor="#ffffff">匹配一个回车符（等价于 \x0d 和\cM）</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">\r</td>
+                <td width="92" bgcolor="#ffffff">\r</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">\\</td>
+                <td width="163" bgcolor="#ffffff">匹配转义字符本身"\"</td>
+                <td width="69" bgcolor="#ffffff">\\</td>
+                <td width="75" bgcolor="#ffffff">\\</td>
+                <td width="69" bgcolor="#ffffff">\\</td>
+                <td width="92" bgcolor="#ffffff">\\</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\cx</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配由 x 指明的控制字符，例如：\cM匹配一个Control-M 或回车符，x 的值必须为A-Z 或 a-z 之一，否则，将 c 视为一个原义的 'c' 字符</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">&nbsp;</td>
+                <td width="92" bgcolor="#ffffff">\cx</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\xn</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配 n，其中 n 为十六进制转义值。十六进制转义值必须为确定的两个数字长，例如：'\x41' 匹配 "A"。'\x041' 则等价于'\x04' &amp; "1"。正则表达式中可以使用 ASCII 编码</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="69" bgcolor="#ffffff">&nbsp;</td>
+                <td width="92" bgcolor="#ffffff">\xn</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>\num</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">匹配 num，其中 num是一个正整数。表示对所获取的匹配的引用</td>
+                <td width="69" bgcolor="#cccccc"><strong>不支持</strong></td>
+                <td width="75" bgcolor="#ffffff">\num</td>
+                <td width="69" bgcolor="#ffffff">\num</td>
+                <td width="92" bgcolor="#ffffff">&nbsp;</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:alnum:]</td>
+                <td width="163" bgcolor="#ffffff">匹配任何一个字母或数字（[A-Za-z0-9]），例如：'[[:alnum:]] '</td>
+                <td width="69" bgcolor="#ffffff">[:alnum:]</td>
+                <td width="75" bgcolor="#ffffff">[:alnum:]</td>
+                <td width="69" bgcolor="#ffffff">[:alnum:]</td>
+                <td width="92" bgcolor="#ffffff">[:alnum:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:alpha:]</td>
+                <td width="163" bgcolor="#ffffff">匹配任何一个字母（[A－Za－z]）， 例如：' [[:alpha:]] '</td>
+                <td width="69" bgcolor="#ffffff">[:alpha:]</td>
+                <td width="75" bgcolor="#ffffff">[:alpha:]</td>
+                <td width="69" bgcolor="#ffffff">[:alpha:]</td>
+                <td width="92" bgcolor="#ffffff">[:alpha:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:digit:]</td>
+                <td width="163" bgcolor="#ffffff">匹配任何一个数字（[0-9]），例如：'[[:digit:]] '</td>
+                <td width="69" bgcolor="#ffffff">[:digit:]</td>
+                <td width="75" bgcolor="#ffffff">[:digit:]</td>
+                <td width="69" bgcolor="#ffffff">[:digit:]</td>
+                <td width="92" bgcolor="#ffffff">[:digit:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:lower:]</td>
+                <td width="163" bgcolor="#ffffff">匹配任何一个小写字母（[a-z]）， 例如：' [[:lower:]] '</td>
+                <td width="69" bgcolor="#ffffff">[:lower:]</td>
+                <td width="75" bgcolor="#ffffff">[:lower:]</td>
+                <td width="69" bgcolor="#ffffff">[:lower:]</td>
+                <td width="92" bgcolor="#ffffff">[:lower:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:upper:]</td>
+                <td width="163" bgcolor="#ffffff">匹配任何一个大写字母（[A-Z]）</td>
+                <td width="69" bgcolor="#ffffff">[:upper:]</td>
+                <td width="75" bgcolor="#ffffff">[:upper:]</td>
+                <td width="69" bgcolor="#ffffff">[:upper:]</td>
+                <td width="92" bgcolor="#ffffff">[:upper:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:space:]</td>
+                <td width="163" bgcolor="#ffffff">任何一个空白字符： 支持制表符、空格，例如：' [[:space:]] '</td>
+                <td width="69" bgcolor="#ffffff">[:space:]</td>
+                <td width="75" bgcolor="#ffffff">[:space:]</td>
+                <td width="69" bgcolor="#ffffff">[:space:]</td>
+                <td width="92" bgcolor="#ffffff">[:space:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:blank:]</td>
+                <td width="163" bgcolor="#ffffff">空格和制表符（横向和纵向），例如：'[[:blank:]]'ó'[\s\t\v]'</td>
+                <td width="69" bgcolor="#ffffff">[:blank:]</td>
+                <td width="75" bgcolor="#ffffff">[:blank:]</td>
+                <td width="69" bgcolor="#ffffff">[:blank:]</td>
+                <td width="92" bgcolor="#ffffff">[:blank:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:graph:]</td>
+                <td width="163" bgcolor="#ffffff">任何一个可以看得见的且可以打印的字符（注意：不包括空格和换行符等），例如：'[[:graph:]] '</td>
+                <td width="69" bgcolor="#ffffff">[:graph:]</td>
+                <td width="75" bgcolor="#ffffff">[:graph:]</td>
+                <td width="69" bgcolor="#ffffff">[:graph:]</td>
+                <td width="92" bgcolor="#ffffff">[:graph:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:print:]</td>
+                <td width="163" bgcolor="#ffffff">任何一个可以打印的字符（注意：不包括：[:cntrl:]、字符串结束符'\0'、EOF 文件结束符（-1）， 但包括空格符号），例如：'[[:print:]] '</td>
+                <td width="69" bgcolor="#ffffff">[:print:]</td>
+                <td width="75" bgcolor="#ffffff">[:print:]</td>
+                <td width="69" bgcolor="#ffffff">[:print:]</td>
+                <td width="92" bgcolor="#ffffff">[:print:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">
+                    <p>[:cntrl:]</p>
+                </td>
+                <td width="163" bgcolor="#ffffff">任何一个控制字符（ASCII 字符集中的前 32 个字符，即：用十进制表示为从 0 到31，例如：换行符、制表符等等），例如：' [[:cntrl:]]'</td>
+                <td width="69" bgcolor="#ffffff">
+                    <p>[:cntrl:]</p>
+                </td>
+                <td width="75" bgcolor="#ffffff">
+                    <p>[:cntrl:]</p>
+                </td>
+                <td width="69" bgcolor="#ffffff">
+                    <p>[:cntrl:]</p>
+                </td>
+                <td width="92" bgcolor="#ffffff">
+                    <p>[:cntrl:]</p>
+                </td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:punct:]</td>
+                <td width="163" bgcolor="#ffffff">任何一个标点符号（不包括：[:alnum:]、[:cntrl:]、[:space:]这些字符集）</td>
+                <td width="69" bgcolor="#ffffff">[:punct:]</td>
+                <td width="75" bgcolor="#ffffff">[:punct:]</td>
+                <td width="69" bgcolor="#ffffff">[:punct:]</td>
+                <td width="92" bgcolor="#ffffff">[:punct:]</td>
+            </tr>
+            <tr>
+                <td width="69" bgcolor="#ffffff">[:xdigit:]</td>
+                <td width="163" bgcolor="#ffffff">任何一个十六进制数（即：0-9，a-f，A-F）</td>
+                <td width="69" bgcolor="#ffffff">[:xdigit:]</td>
+                <td width="75" bgcolor="#ffffff">[:xdigit:]</td>
+                <td width="69" bgcolor="#ffffff">[:xdigit:]</td>
+                <td width="92" bgcolor="#ffffff">[:xdigit:]</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
