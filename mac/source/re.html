@@ -1,11 +1,71 @@
 <html>
 
-<head></head>
+<head>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
+
+    <script>
+        function hasClass(elem, cls) {
+            cls = cls || '';
+            if (cls.replace(/\s/g, '').length == 0) return false; //当cls没有参数时，返回false
+            return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
+        }
+        function addClass(elem, cls) {
+            if (!hasClass(elem, cls)) {
+                elem.className = elem.className == '' ? cls : elem.className + ' ' + cls;
+            }
+        }
+        function removeClass(elem, cls) {
+            if (hasClass(elem, cls)) {
+                var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, '') + ' ';
+                while (newClass.indexOf(' ' + cls + ' ') >= 0) {
+                    newClass = newClass.replace(' ' + cls + ' ', ' ');
+                }
+                elem.className = newClass.replace(/^\s+|\s+$/g, '');
+            }
+        }
+
+        function test() {
+            var re_textarea = document.getElementById("re_str");
+            var test_textarea = document.getElementById("test_str");
+            var re_str = re_textarea.value;
+            var test_str = test_textarea.value;
+            var pattern = new RegExp(re_str);
+            var is_match = pattern.test(test_str);
+
+            //alert(is_match);
+            if (is_match) {
+                removeClass(test_textarea, "is-invalid");
+                addClass(test_textarea, "is-valid");
+            } else {
+                removeClass(test_textarea, "is-valid");
+                addClass(test_textarea, "is-invalid");
+            }
+        }
+    </Script>
+
+</head>
 
 <body>
-    <table border="0" cellspacing="1" cellpadding="4" bgcolor="#666666" 
-        style="width: 1000px;left: 50%;position: relative;margin-left: -500px;top:14%;margin-bottom:100px;"
-    >
+
+    <div style="width:1000px;left: 50%;position: relative;margin-left: -500px;top:14%;margin-bottom:100px;">
+        <div class="input-group">
+            <span class="input-group-addon">Regular Expression String:</span>
+            <textarea type="text" class="form-control" id="re_str" placeholder="Put RE here." rows="4"></textarea>
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">Test String:</span>
+            <textarea type="text" class="form-control" id="test_str" placeholder="Put test string here." rows="2"></textarea>
+        </div>
+        <br>
+        <button type="button" class="btn btn-secondary" id="test" style="position:relative;float:right;" onclick="test()">
+            Test
+        </button>
+    </div>
+
+
+    <table border="0" cellspacing="1" cellpadding="4" bgcolor="#666666" style="width: 1000px;left: 50%;position: relative;margin-left: -500px;top:14%;margin-bottom:100px;">
         <tbody>
             <tr style="height:70px;">
                 <td width="69" bgcolor="#cccccc"><strong>字符</strong></td>
