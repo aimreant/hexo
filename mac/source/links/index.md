@@ -21,6 +21,6 @@ date: 2017-04-23 22:44:46
 
 [JackFrost | 一只不断前行的蜗牛](http://www.fuzhufuzhu.com/)
 
-[ChenZiping -> blog | 屌屌的陈子平](http://blog.chenziping.cf/)
+[橙子皮(techping)](http://blog.techping.cn/)
 
 [Nicho米糖](http://blog.nichoeit.com/)
