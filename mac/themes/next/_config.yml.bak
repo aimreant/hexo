@@ -410,7 +410,7 @@ vkontakte_api:
 gitment:
   enable: true
   githubID: aimreant
-  repo: https://github.com/aimreant/hexo
+  repo: hexo
   ClientID: f7d1da2e9416b45df9b8
   ClientSecret: 78c37e6db8dce81ba7b8439882bb83f00a7e68ef
   lazy: true
