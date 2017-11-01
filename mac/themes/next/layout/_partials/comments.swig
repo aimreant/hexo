@@ -1,6 +1,13 @@
 {% if page.comments %}
   <div class="comments" id="comments">
-    {% if (theme.duoshuo and theme.duoshuo.shortname) or theme.duoshuo_shortname %}
+    {% if theme.gitment.enable %}
+       {% if theme.gitment.lazy %}
+         <div onclick="ShowGitment()" id="gitment-display-button">{{  __('gitmentbutton') }}</div>
+         <div id="gitment-container" style="display:none"></div>
+       {% else %}
+         <div id="gitment-container"></div>
+       {% endif %}
+    {% elseif (theme.duoshuo and theme.duoshuo.shortname) or theme.duoshuo_shortname %}
       <div class="ds-thread" data-thread-key="{{ page.path }}"
            data-title="{{ page.title }}" data-url="{{ page.permalink }}">
       </div>
