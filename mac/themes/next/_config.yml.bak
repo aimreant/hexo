@@ -413,7 +413,7 @@ gitment:
   repo: hexo
   ClientID: f7d1da2e9416b45df9b8
   ClientSecret: 78c37e6db8dce81ba7b8439882bb83f00a7e68ef
-  lazy: true
+  lazy: false
 
 # Show number of visitors to each article.
 # You can visit https://leancloud.cn get AppID and AppKey.
